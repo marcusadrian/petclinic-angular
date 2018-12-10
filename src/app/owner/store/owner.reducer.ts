@@ -1,14 +1,14 @@
-import {OwnerSummary} from '../model/OwnerSummary';
 import {OwnerActions, SET_OWNERS} from './owner.actions';
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {StateId} from '../../StateId';
+import {OwnerSearchResponse} from '../model/OwnerSearchResponse';
 
 export interface OwnerState {
-  owners: OwnerSummary[];
+  ownerSearchResponse: OwnerSearchResponse;
 }
 
 const initialState: OwnerState = {
-  owners: []
+  ownerSearchResponse: {}
 };
 
 export function ownerReducer(state = initialState, action: OwnerActions) {
@@ -16,7 +16,7 @@ export function ownerReducer(state = initialState, action: OwnerActions) {
     case SET_OWNERS:
       return {
         ...state,
-        owners: action.payload
+        ownerSearchResponse: action.payload
       };
     default: {
       return state;
@@ -25,5 +25,7 @@ export function ownerReducer(state = initialState, action: OwnerActions) {
 }
 
 const getOwnerState = createFeatureSelector<OwnerState>(StateId.owner);
-export const getOwners = createSelector(getOwnerState, (state: OwnerState) => state.owners);
+export const getOwners = createSelector(getOwnerState,
+  (state: OwnerState) => state.ownerSearchResponse._embedded ? state.ownerSearchResponse._embedded.owners : []
+);
 

@@ -1,7 +1,7 @@
 import {OwnerSummary} from './OwnerSummary';
 
 export interface OwnerSearchResponse {
-  _embedded: Owners;
+  _embedded?: Owners;
 }
 
 export interface Owners {
