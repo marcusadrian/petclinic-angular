@@ -8,6 +8,8 @@ import * as fromUi from '../../shared/ui.reducer';
 import * as fromOwner from '../../owner/store/owner.reducer';
 import {OwnerService} from '../store/owner.service';
 import {MatTableDataSource} from '@angular/material';
+import {OwnerSearchResponse} from '../model/OwnerSearchResponse';
+import {Page} from '../../model/Page';
 
 @Component({
   selector: 'app-owner-search',
@@ -20,10 +22,10 @@ export class OwnerSearchComponent implements OnInit {
   lastName: FormControl;
 
   isLoading$: Observable<boolean>;
-  owners$: Observable<OwnerSummary[]>;
 
   displayedColumns: string[] = ['name', 'address', 'city', 'telephone', 'petNames'];
   dataSource = new MatTableDataSource<OwnerSummary>();
+  page: Page;
 
   constructor(
     private store: Store<AppState>,
@@ -33,10 +35,10 @@ export class OwnerSearchComponent implements OnInit {
   ngOnInit() {
 
     this.isLoading$ = this.store.pipe(select(fromUi.getIsLoading));
-    this.owners$ = this.store.pipe(select(fromOwner.getOwners));
-    this.store.pipe(select(fromOwner.getOwners)).subscribe(
-      (owners: OwnerSummary[]) => {
-        this.dataSource.data = owners;
+    this.store.pipe(select(fromOwner.getOwnerSearchResponse)).subscribe(
+      (resp: OwnerSearchResponse) => {
+        this.dataSource.data = resp._embedded ? resp._embedded.owners : [];
+        this.page = resp.page;
       }
     );
     this.lastName = new FormControl('');

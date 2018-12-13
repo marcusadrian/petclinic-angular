@@ -25,7 +25,5 @@ export function ownerReducer(state = initialState, action: OwnerActions) {
 }
 
 const getOwnerState = createFeatureSelector<OwnerState>(StateId.owner);
-export const getOwners = createSelector(getOwnerState, (state: OwnerState) => state.ownerSearchResponse._embedded ?
-  state.ownerSearchResponse._embedded.owners : []);
-export const getPage = createSelector(getOwnerState, (state: OwnerState) => state.ownerSearchResponse.page);
+export const getOwnerSearchResponse = createSelector(getOwnerState, (state: OwnerState) => state.ownerSearchResponse);
 
