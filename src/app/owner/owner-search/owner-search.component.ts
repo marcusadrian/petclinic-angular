@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {OwnerSummary} from '../model/OwnerSummary';
 import {FormControl, FormGroup} from '@angular/forms';
 import {select, Store} from '@ngrx/store';
@@ -7,9 +7,10 @@ import {Observable} from 'rxjs';
 import * as fromUi from '../../shared/ui.reducer';
 import * as fromOwner from '../../owner/store/owner.reducer';
 import {OwnerService} from '../store/owner.service';
-import {MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {OwnerSearchResponse} from '../model/OwnerSearchResponse';
 import {Page} from '../../model/Page';
+import {PageRequestBuilder} from '../../model/page-request';
 
 @Component({
   selector: 'app-owner-search',
@@ -27,6 +28,9 @@ export class OwnerSearchComponent implements OnInit {
   dataSource = new MatTableDataSource<OwnerSummary>();
   page: Page;
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
   constructor(
     private store: Store<AppState>,
     private ownerService: OwnerService) {
@@ -39,6 +43,11 @@ export class OwnerSearchComponent implements OnInit {
       (resp: OwnerSearchResponse) => {
         this.dataSource.data = resp._embedded ? resp._embedded.owners : [];
         this.page = resp.page;
+        if (this.page) {
+          this.paginator.pageSize = this.page.size;
+          this.paginator.length = this.page.totalElements;
+          this.paginator.pageIndex = this.page.number;
+        }
       }
     );
     this.lastName = new FormControl('');
@@ -46,9 +55,31 @@ export class OwnerSearchComponent implements OnInit {
       lastName: this.lastName
     });
 
+
+    this.sort.sortChange.subscribe(() => {
+      // If the user changes the sort order, reset back to the first page.
+      this.paginator.pageIndex = 0;
+      this.onOwnerSearchSubmit();
+    });
+
+    this.paginator.page.subscribe(() => {
+      // if (this.page.size)
+      this.onOwnerSearchSubmit();
+    });
   }
 
   onOwnerSearchSubmit() {
-    this.ownerService.fetchOwners(this.lastName.value);
+
+    console.log('sort.active : ' + this.sort.active);
+    console.log('sort.direction : ' + this.sort.direction);
+    console.log('paginator.pageIndex : ' + this.paginator.pageIndex);
+    console.log('paginator.pageSize : ' + this.paginator.pageSize);
+
+    this.ownerService.fetchOwners(
+      this.lastName.value,
+      new PageRequestBuilder()
+        .page(this.paginator.pageIndex)
+        .size(this.paginator.pageSize).build());
   }
+
 }
