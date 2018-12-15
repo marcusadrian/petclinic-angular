@@ -79,7 +79,17 @@ export class OwnerSearchComponent implements OnInit {
       this.lastName.value,
       new PageRequestBuilder()
         .page(this.paginator.pageIndex)
-        .size(this.paginator.pageSize).build());
+        .size(this.paginator.pageSize)
+        .sortBy(this.sortByKey(this.sort.active))
+        .sortDirection(this.sort.direction)
+        .build());
+  }
+
+  sortByKey(sort: string) {
+    if (sort === 'name') {
+      return 'lastName';
+    }
+    return sort;
   }
 
 }

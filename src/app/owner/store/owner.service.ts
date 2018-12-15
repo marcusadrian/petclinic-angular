@@ -21,7 +21,8 @@ export class OwnerService {
     if (pageRequest) {
       params = params
         .set('page', pageRequest.page.toString())
-        .set('size', pageRequest.size.toString());
+        .set('size', pageRequest.size.toString())
+        .set('sort', pageRequest.sortBy.toString() + ',' + pageRequest.sortDirection);
     }
     // start spinner
     this.store.dispatch(new UI.StartLoading());
