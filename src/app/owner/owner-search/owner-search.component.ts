@@ -11,6 +11,7 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {OwnerSearchResponse} from '../model/OwnerSearchResponse';
 import {Page} from '../../model/Page';
 import {PageRequestBuilder} from '../../model/page-request';
+import {OwnerSearchCriteria} from './owner-search-criteria';
 
 @Component({
   selector: 'app-owner-search',
@@ -21,6 +22,7 @@ export class OwnerSearchComponent implements OnInit {
 
   ownerSearchForm: FormGroup;
   lastName: FormControl;
+  searchCriteria: OwnerSearchCriteria = new OwnerSearchCriteria();
 
   isLoading$: Observable<boolean>;
 
@@ -35,6 +37,7 @@ export class OwnerSearchComponent implements OnInit {
     private store: Store<AppState>,
     private ownerService: OwnerService) {
   }
+
 
   ngOnInit() {
 
@@ -59,16 +62,22 @@ export class OwnerSearchComponent implements OnInit {
     this.sort.sortChange.subscribe(() => {
       // If the user changes the sort order, reset back to the first page.
       this.paginator.pageIndex = 0;
-      this.onOwnerSearchSubmit();
+      this.fetchOwners();
     });
 
     this.paginator.page.subscribe(() => {
-      // if (this.page.size)
-      this.onOwnerSearchSubmit();
+      this.fetchOwners();
     });
   }
 
-  onOwnerSearchSubmit() {
+  onSubmit() {
+    this.paginator.pageIndex = 0;
+    // only take into account a criteria change when user validates pressing the submit button
+    this.searchCriteria.lastname = this.lastName.value;
+    this.fetchOwners();
+  }
+
+  fetchOwners() {
 
     console.log('sort.active : ' + this.sort.active);
     console.log('sort.direction : ' + this.sort.direction);
@@ -76,7 +85,7 @@ export class OwnerSearchComponent implements OnInit {
     console.log('paginator.pageSize : ' + this.paginator.pageSize);
 
     this.ownerService.fetchOwners(
-      this.lastName.value,
+      this.searchCriteria,
       new PageRequestBuilder()
         .page(this.paginator.pageIndex)
         .size(this.paginator.pageSize)

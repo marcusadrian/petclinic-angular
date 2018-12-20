@@ -6,6 +6,7 @@ import {AppState} from '../../app.reducer';
 import * as UI from '../../shared/ui.actions';
 import * as Owner from '../../owner/store/owner.actions';
 import {PageRequest} from '../../model/page-request';
+import {OwnerSearchCriteria} from '../owner-search/owner-search-criteria';
 
 @Injectable()
 export class OwnerService {
@@ -14,10 +15,10 @@ export class OwnerService {
               private store: Store<AppState>) {
   }
 
-  fetchOwners(lastName: string, pageRequest: PageRequest) {
+  fetchOwners(searchCriteria: OwnerSearchCriteria, pageRequest: PageRequest) {
 
-    console.log(lastName);
-    let params = new HttpParams().set('lastName', lastName);
+    console.log(searchCriteria);
+    let params = new HttpParams().set('lastName', searchCriteria.lastname);
     if (pageRequest) {
       params = params
         .set('page', pageRequest.page.toString())
