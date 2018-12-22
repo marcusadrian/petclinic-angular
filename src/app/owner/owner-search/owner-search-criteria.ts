@@ -5,5 +5,6 @@ export class OwnerSearchCriteria {
   public address: string;
   public city: string;
   public telephone: string;
+  public petName: string;
 
 }

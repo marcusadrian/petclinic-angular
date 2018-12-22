@@ -26,6 +26,7 @@ export class OwnerSearchComponent implements OnInit {
   address: FormControl;
   city: FormControl;
   telephone: FormControl;
+  petName: FormControl;
 
   searchCriteria: OwnerSearchCriteria = new OwnerSearchCriteria();
 
@@ -63,14 +64,16 @@ export class OwnerSearchComponent implements OnInit {
     this.address = new FormControl('');
     this.city = new FormControl('');
     this.telephone = new FormControl('');
+    this.petName = new FormControl('');
+
     this.ownerSearchForm = new FormGroup({
       lastName: this.lastName,
       firstName: this.firstName,
       address: this.address,
       city: this.city,
       telephone: this.telephone,
+      petName: this.petName,
     });
-
 
     this.sort.sortChange.subscribe(() => {
       // If the user changes the sort order, reset back to the first page.
@@ -91,6 +94,7 @@ export class OwnerSearchComponent implements OnInit {
     this.searchCriteria.address = this.address.value;
     this.searchCriteria.city = this.city.value;
     this.searchCriteria.telephone = this.telephone.value;
+    this.searchCriteria.petName = this.petName.value;
     this.fetchOwners();
   }
 

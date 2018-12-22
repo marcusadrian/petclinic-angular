@@ -23,7 +23,8 @@ export class OwnerService {
       .set('lastName', searchCriteria.lastName)
       .set('address', searchCriteria.address)
       .set('city', searchCriteria.city)
-      .set('telephone', searchCriteria.telephone);
+      .set('telephone', searchCriteria.telephone)
+      .set('petName', searchCriteria.petName);
     if (pageRequest) {
       params = params
         .set('page', pageRequest.page.toString())
