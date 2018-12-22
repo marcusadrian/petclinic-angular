@@ -15,6 +15,7 @@
         matInput
         placeholder="first name"
         formControlName="firstName">
+      <mat-hint>starting with</mat-hint>
     </mat-form-field>
     <mat-form-field>
       <input
@@ -22,7 +23,33 @@
         matInput
         placeholder="last name"
         formControlName="lastName">
+      <mat-hint>starting with</mat-hint>
     </mat-form-field>
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        placeholder="address"
+        formControlName="address">
+      <mat-hint>containing</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        placeholder="city"
+        formControlName="city">
+      <mat-hint>starting with</mat-hint>
+    </mat-form-field>
+    <mat-form-field>
+      <input
+        type="text"
+        matInput
+        placeholder="telephone"
+        formControlName="telephone">
+      <mat-hint>containing</mat-hint>
+    </mat-form-field>
+
     <button *ngIf="!(isLoading$ | async)" type="submit" mat-raised-button color="primary">Submit</button>
     <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
   </form>

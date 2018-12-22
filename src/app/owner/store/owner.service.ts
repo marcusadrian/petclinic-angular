@@ -20,7 +20,10 @@ export class OwnerService {
     console.log(searchCriteria);
     let params = new HttpParams()
       .set('firstName', searchCriteria.firstName)
-      .set('lastName', searchCriteria.lastName);
+      .set('lastName', searchCriteria.lastName)
+      .set('address', searchCriteria.address)
+      .set('city', searchCriteria.city)
+      .set('telephone', searchCriteria.telephone);
     if (pageRequest) {
       params = params
         .set('page', pageRequest.page.toString())
