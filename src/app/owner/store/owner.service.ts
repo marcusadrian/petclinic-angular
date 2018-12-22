@@ -18,7 +18,9 @@ export class OwnerService {
   fetchOwners(searchCriteria: OwnerSearchCriteria, pageRequest: PageRequest) {
 
     console.log(searchCriteria);
-    let params = new HttpParams().set('lastName', searchCriteria.lastname);
+    let params = new HttpParams()
+      .set('firstName', searchCriteria.firstName)
+      .set('lastName', searchCriteria.lastName);
     if (pageRequest) {
       params = params
         .set('page', pageRequest.page.toString())

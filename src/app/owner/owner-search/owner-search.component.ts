@@ -22,6 +22,7 @@ export class OwnerSearchComponent implements OnInit {
 
   ownerSearchForm: FormGroup;
   lastName: FormControl;
+  firstName: FormControl;
   searchCriteria: OwnerSearchCriteria = new OwnerSearchCriteria();
 
   isLoading$: Observable<boolean>;
@@ -54,8 +55,10 @@ export class OwnerSearchComponent implements OnInit {
       }
     );
     this.lastName = new FormControl('');
+    this.firstName = new FormControl('');
     this.ownerSearchForm = new FormGroup({
-      lastName: this.lastName
+      lastName: this.lastName,
+      firstName: this.firstName
     });
 
 
@@ -73,7 +76,8 @@ export class OwnerSearchComponent implements OnInit {
   onSubmit() {
     this.paginator.pageIndex = 0;
     // only take into account a criteria change when user validates pressing the submit button
-    this.searchCriteria.lastname = this.lastName.value;
+    this.searchCriteria.lastName = this.lastName.value;
+    this.searchCriteria.firstName = this.firstName.value;
     this.fetchOwners();
   }
 

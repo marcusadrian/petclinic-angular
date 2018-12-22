@@ -1,5 +1,6 @@
 export class OwnerSearchCriteria {
 
-  public lastname: string;
+  public lastName: string;
+  public firstName: string;
 
 }
