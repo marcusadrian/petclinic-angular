@@ -1,3 +1,11 @@
 <p>
-  owner-detail works!
+  Owner Information
 </p>
+
+<mat-list *ngIf="owner">
+  <mat-list-item>First Name : {{owner.firstName}}</mat-list-item>
+  <mat-list-item>Last Name : {{owner.lastName}}</mat-list-item>
+  <mat-list-item>Address : {{owner.address}}</mat-list-item>
+  <mat-list-item>City : {{owner.city}}</mat-list-item>
+  <mat-list-item>Telephone : {{owner.telephone}}</mat-list-item>
+</mat-list>

@@ -12,6 +12,7 @@ import {OwnerSearchResponse} from '../model/OwnerSearchResponse';
 import {Page} from '../../model/Page';
 import {PageRequestBuilder} from '../../model/page-request';
 import {OwnerSearchCriteria} from './owner-search-criteria';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-owner-search',
@@ -41,7 +42,9 @@ export class OwnerSearchComponent implements OnInit {
 
   constructor(
     private store: Store<AppState>,
-    private ownerService: OwnerService) {
+    private ownerService: OwnerService,
+    private router: Router,
+    private route: ActivatedRoute) {
   }
 
 
@@ -122,4 +125,8 @@ export class OwnerSearchComponent implements OnInit {
     return sort;
   }
 
+  onAskForDetail(id: number) {
+    console.log('onAskForDetail : ' + id);
+    this.router.navigate(['../', id], {relativeTo: this.route});
+  }
 }

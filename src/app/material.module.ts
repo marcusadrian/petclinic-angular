@@ -3,7 +3,9 @@ import {
   MatButtonModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule, MatPaginatorModule,
+  MatInputModule,
+  MatListModule,
+  MatPaginatorModule,
   MatProgressSpinnerModule,
   MatSortModule,
   MatTableModule
@@ -19,7 +21,8 @@ import {
     MatInputModule,
     MatProgressSpinnerModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatListModule
   ],
   exports: [
     MatTableModule,
@@ -29,7 +32,8 @@ import {
     MatInputModule,
     MatProgressSpinnerModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatListModule
   ]
 })
 export class MaterialModule {

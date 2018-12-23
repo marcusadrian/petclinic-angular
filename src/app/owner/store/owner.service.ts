@@ -7,6 +7,7 @@ import * as UI from '../../shared/ui.actions';
 import * as Owner from '../../owner/store/owner.actions';
 import {PageRequest} from '../../model/page-request';
 import {OwnerSearchCriteria} from '../owner-search/owner-search-criteria';
+import {OwnerDetail} from '../model/owner-detail';
 
 @Injectable()
 export class OwnerService {
@@ -40,6 +41,25 @@ export class OwnerService {
           this.store.dispatch(new UI.StopLoading());
           // put into store
           this.store.dispatch(new Owner.SetOwners(ownerSearchResponse));
+        },
+        error => {
+          this.store.dispatch(new UI.StopLoading());
+          console.log(error);
+        });
+
+  }
+
+  fetchOwner(id: number) {
+    console.log('fetching owner ' + id + '[=id]');
+    // start spinner
+    this.store.dispatch(new UI.StartLoading());
+    // do rest call
+    this.httpClient.get<OwnerDetail>('http://localhost:8080/my-petclinic/owners/' + id)
+      .subscribe((owner: OwnerDetail) => {
+          // stop spinner
+          this.store.dispatch(new UI.StopLoading());
+          // put into store
+          this.store.dispatch(new Owner.SetOwner(owner));
         },
         error => {
           this.store.dispatch(new UI.StopLoading());
