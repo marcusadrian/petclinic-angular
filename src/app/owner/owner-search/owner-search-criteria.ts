@@ -1,3 +1,5 @@
+import {PageRequest} from '../../model/page-request';
+
 export class OwnerSearchCriteria {
 
   public lastName: string;
@@ -6,5 +8,7 @@ export class OwnerSearchCriteria {
   public city: string;
   public telephone: string;
   public petName: string;
+
+  public pageRequest: PageRequest;
 
 }

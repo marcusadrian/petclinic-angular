@@ -8,11 +8,11 @@ import * as fromUi from '../../shared/ui.reducer';
 import * as fromOwner from '../../owner/store/owner.reducer';
 import {OwnerService} from '../store/owner.service';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {OwnerSearchResponse} from '../model/OwnerSearchResponse';
 import {Page} from '../../model/Page';
 import {PageRequestBuilder} from '../../model/page-request';
 import {OwnerSearchCriteria} from './owner-search-criteria';
 import {ActivatedRoute, Router} from '@angular/router';
+import {OwnerSearch} from '../model/owner-search.model';
 
 @Component({
   selector: 'app-owner-search',
@@ -49,19 +49,6 @@ export class OwnerSearchComponent implements OnInit {
 
 
   ngOnInit() {
-
-    this.isLoading$ = this.store.pipe(select(fromUi.getIsLoading));
-    this.store.pipe(select(fromOwner.getOwnerSearchResponse)).subscribe(
-      (resp: OwnerSearchResponse) => {
-        this.dataSource.data = resp._embedded ? resp._embedded.owners : [];
-        this.page = resp.page;
-        if (this.page) {
-          this.paginator.pageSize = this.page.size;
-          this.paginator.length = this.page.totalElements;
-          this.paginator.pageIndex = this.page.number;
-        }
-      }
-    );
     this.lastName = new FormControl('');
     this.firstName = new FormControl('');
     this.address = new FormControl('');
@@ -87,6 +74,38 @@ export class OwnerSearchComponent implements OnInit {
     this.paginator.page.subscribe(() => {
       this.fetchOwners();
     });
+
+    this.isLoading$ = this.store.pipe(select(fromUi.getIsLoading));
+    this.store.pipe(select(fromOwner.getOwnerSearch)).subscribe(
+      (search: OwnerSearch) => {
+        if (!search) {
+          return;
+        }
+        this.searchCriteria = search.request;
+        const resp = search.response;
+        this.dataSource.data = resp._embedded ? resp._embedded.owners : [];
+        this.page = resp.page;
+        if (this.page) {
+          this.paginator.pageSize = this.page.size;
+          this.paginator.length = this.page.totalElements;
+          this.paginator.pageIndex = this.page.number;
+        }
+        this.setFormValues(search.request);
+      }
+    );
+  }
+
+  // to conform to the last state in case we come back to this page (content cache)
+  setFormValues(criteria: OwnerSearchCriteria) {
+    if (!criteria) {
+      return;
+    }
+    this.lastName.setValue(criteria.lastName);
+    this.firstName.setValue(criteria.firstName);
+    this.address.setValue(criteria.address);
+    this.city.setValue(criteria.city);
+    this.telephone.setValue(criteria.telephone);
+    this.petName.setValue(criteria.petName);
   }
 
   onSubmit() {
@@ -102,20 +121,14 @@ export class OwnerSearchComponent implements OnInit {
   }
 
   fetchOwners() {
-
-    console.log('sort.active : ' + this.sort.active);
-    console.log('sort.direction : ' + this.sort.direction);
-    console.log('paginator.pageIndex : ' + this.paginator.pageIndex);
-    console.log('paginator.pageSize : ' + this.paginator.pageSize);
-
-    this.ownerService.fetchOwners(
-      this.searchCriteria,
-      new PageRequestBuilder()
-        .page(this.paginator.pageIndex)
-        .size(this.paginator.pageSize)
-        .sortBy(this.sortByKey(this.sort.active))
-        .sortDirection(this.sort.direction)
-        .build());
+    this.searchCriteria.pageRequest = new PageRequestBuilder()
+      .page(this.paginator.pageIndex)
+      .size(this.paginator.pageSize)
+      .sortBy(this.sortByKey(this.sort.active))
+      .sortDirection(this.sort.direction)
+      .build();
+    console.log(JSON.stringify(this.searchCriteria));
+    this.ownerService.fetchOwners(this.searchCriteria);
   }
 
   sortByKey(sort: string) {

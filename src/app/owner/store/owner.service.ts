@@ -5,9 +5,9 @@ import {Store} from '@ngrx/store';
 import {AppState} from '../../app.reducer';
 import * as UI from '../../shared/ui.actions';
 import * as Owner from '../../owner/store/owner.actions';
-import {PageRequest} from '../../model/page-request';
 import {OwnerSearchCriteria} from '../owner-search/owner-search-criteria';
 import {OwnerDetail} from '../model/owner-detail';
+import {OwnerSearch} from '../model/owner-search.model';
 
 @Injectable()
 export class OwnerService {
@@ -16,21 +16,21 @@ export class OwnerService {
               private store: Store<AppState>) {
   }
 
-  fetchOwners(searchCriteria: OwnerSearchCriteria, pageRequest: PageRequest) {
+  fetchOwners(criteria: OwnerSearchCriteria) {
 
-    console.log(searchCriteria);
+    console.log(criteria);
     let params = new HttpParams()
-      .set('firstName', searchCriteria.firstName)
-      .set('lastName', searchCriteria.lastName)
-      .set('address', searchCriteria.address)
-      .set('city', searchCriteria.city)
-      .set('telephone', searchCriteria.telephone)
-      .set('petName', searchCriteria.petName);
-    if (pageRequest) {
+      .set('firstName', criteria.firstName)
+      .set('lastName', criteria.lastName)
+      .set('address', criteria.address)
+      .set('city', criteria.city)
+      .set('telephone', criteria.telephone)
+      .set('petName', criteria.petName);
+    if (criteria.pageRequest) {
       params = params
-        .set('page', pageRequest.page.toString())
-        .set('size', pageRequest.size.toString())
-        .set('sort', pageRequest.sortBy.toString() + ',' + pageRequest.sortDirection);
+        .set('page', criteria.pageRequest.page.toString())
+        .set('size', criteria.pageRequest.size.toString())
+        .set('sort', criteria.pageRequest.sortBy.toString() + ',' + criteria.pageRequest.sortDirection);
     }
     // start spinner
     this.store.dispatch(new UI.StartLoading());
@@ -40,7 +40,7 @@ export class OwnerService {
           // stop spinner
           this.store.dispatch(new UI.StopLoading());
           // put into store
-          this.store.dispatch(new Owner.SetOwners(ownerSearchResponse));
+          this.store.dispatch(new Owner.SetOwners(new OwnerSearch(criteria, ownerSearchResponse)));
         },
         error => {
           this.store.dispatch(new UI.StopLoading());

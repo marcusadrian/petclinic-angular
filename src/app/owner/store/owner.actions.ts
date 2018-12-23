@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
-import {OwnerSearchResponse} from '../model/OwnerSearchResponse';
 import {OwnerDetail} from '../model/owner-detail';
+import {OwnerSearch} from '../model/owner-search.model';
 
 export const SET_OWNERS = '[Owner] Set Owners';
 export const SET_OWNER = '[Owner] Set Owner';
@@ -8,7 +8,7 @@ export const SET_OWNER = '[Owner] Set Owner';
 export class SetOwners implements Action {
   readonly type = SET_OWNERS;
 
-  constructor(public payload: OwnerSearchResponse) {
+  constructor(public payload: OwnerSearch) {
   }
 }
 
