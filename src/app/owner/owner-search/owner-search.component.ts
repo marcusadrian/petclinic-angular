@@ -29,7 +29,7 @@ export class OwnerSearchComponent implements OnInit {
   telephone: FormControl;
   petName: FormControl;
 
-  searchCriteria: OwnerSearchRequest = new OwnerSearchRequest();
+  ownerSearchRequest: OwnerSearchRequest = new OwnerSearchRequest();
 
   isLoading$: Observable<boolean>;
 
@@ -81,7 +81,7 @@ export class OwnerSearchComponent implements OnInit {
         if (!search) {
           return;
         }
-        this.searchCriteria = search.request;
+        this.ownerSearchRequest = search.request;
         const resp = search.response;
         this.dataSource.data = resp._embedded ? resp._embedded.owners : [];
         this.page = resp.page;
@@ -111,24 +111,24 @@ export class OwnerSearchComponent implements OnInit {
   onSubmit() {
     this.paginator.pageIndex = 0;
     // only take into account a criteria change when user validates pressing the submit button
-    this.searchCriteria.lastName = this.lastName.value;
-    this.searchCriteria.firstName = this.firstName.value;
-    this.searchCriteria.address = this.address.value;
-    this.searchCriteria.city = this.city.value;
-    this.searchCriteria.telephone = this.telephone.value;
-    this.searchCriteria.petName = this.petName.value;
+    this.ownerSearchRequest.lastName = this.lastName.value;
+    this.ownerSearchRequest.firstName = this.firstName.value;
+    this.ownerSearchRequest.address = this.address.value;
+    this.ownerSearchRequest.city = this.city.value;
+    this.ownerSearchRequest.telephone = this.telephone.value;
+    this.ownerSearchRequest.petName = this.petName.value;
     this.fetchOwners();
   }
 
   fetchOwners() {
-    this.searchCriteria.pageRequest = new PageRequestBuilder()
+    this.ownerSearchRequest.pageRequest = new PageRequestBuilder()
       .page(this.paginator.pageIndex)
       .size(this.paginator.pageSize)
       .sortBy(this.sortByKey(this.sort.active))
       .sortDirection(this.sort.direction)
       .build();
-    console.log(JSON.stringify(this.searchCriteria));
-    this.ownerService.fetchOwners(this.searchCriteria);
+    console.log(JSON.stringify(this.ownerSearchRequest));
+    this.ownerService.fetchOwners(this.ownerSearchRequest);
   }
 
   sortByKey(sort: string) {

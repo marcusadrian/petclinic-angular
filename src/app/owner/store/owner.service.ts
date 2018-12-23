@@ -16,21 +16,21 @@ export class OwnerService {
               private store: Store<AppState>) {
   }
 
-  fetchOwners(criteria: OwnerSearchRequest) {
+  fetchOwners(request: OwnerSearchRequest) {
 
-    console.log(criteria);
+    console.log(request);
     let params = new HttpParams()
-      .set('firstName', criteria.firstName)
-      .set('lastName', criteria.lastName)
-      .set('address', criteria.address)
-      .set('city', criteria.city)
-      .set('telephone', criteria.telephone)
-      .set('petName', criteria.petName);
-    if (criteria.pageRequest) {
+      .set('firstName', request.firstName)
+      .set('lastName', request.lastName)
+      .set('address', request.address)
+      .set('city', request.city)
+      .set('telephone', request.telephone)
+      .set('petName', request.petName);
+    if (request.pageRequest) {
       params = params
-        .set('page', criteria.pageRequest.page.toString())
-        .set('size', criteria.pageRequest.size.toString())
-        .set('sort', criteria.pageRequest.sortBy.toString() + ',' + criteria.pageRequest.sortDirection);
+        .set('page', request.pageRequest.page.toString())
+        .set('size', request.pageRequest.size.toString())
+        .set('sort', request.pageRequest.sortBy.toString() + ',' + request.pageRequest.sortDirection);
     }
     // start spinner
     this.store.dispatch(new UI.StartLoading());
@@ -40,7 +40,7 @@ export class OwnerService {
           // stop spinner
           this.store.dispatch(new UI.StopLoading());
           // put into store
-          this.store.dispatch(new Owner.SetOwners(new OwnerSearch(criteria, ownerSearchResponse)));
+          this.store.dispatch(new Owner.SetOwners(new OwnerSearch(request, ownerSearchResponse)));
         },
         error => {
           this.store.dispatch(new UI.StopLoading());
