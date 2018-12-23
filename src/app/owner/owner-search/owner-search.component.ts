@@ -10,7 +10,7 @@ import {OwnerService} from '../store/owner.service';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {Page} from '../../model/Page';
 import {PageRequestBuilder} from '../../model/page-request';
-import {OwnerSearchCriteria} from './owner-search-criteria';
+import {OwnerSearchRequest} from './owner-search-request';
 import {ActivatedRoute, Router} from '@angular/router';
 import {OwnerSearch} from '../model/owner-search.model';
 
@@ -29,7 +29,7 @@ export class OwnerSearchComponent implements OnInit {
   telephone: FormControl;
   petName: FormControl;
 
-  searchCriteria: OwnerSearchCriteria = new OwnerSearchCriteria();
+  searchCriteria: OwnerSearchRequest = new OwnerSearchRequest();
 
   isLoading$: Observable<boolean>;
 
@@ -96,7 +96,7 @@ export class OwnerSearchComponent implements OnInit {
   }
 
   // to conform to the last state in case we come back to this page (content cache)
-  setFormValues(criteria: OwnerSearchCriteria) {
+  setFormValues(criteria: OwnerSearchRequest) {
     if (!criteria) {
       return;
     }

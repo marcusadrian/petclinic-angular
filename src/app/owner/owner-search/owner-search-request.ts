@@ -1,6 +1,6 @@
 import {PageRequest} from '../../model/page-request';
 
-export class OwnerSearchCriteria {
+export class OwnerSearchRequest {
 
   public lastName: string;
   public firstName: string;

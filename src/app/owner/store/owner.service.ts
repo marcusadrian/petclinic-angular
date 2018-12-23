@@ -5,7 +5,7 @@ import {Store} from '@ngrx/store';
 import {AppState} from '../../app.reducer';
 import * as UI from '../../shared/ui.actions';
 import * as Owner from '../../owner/store/owner.actions';
-import {OwnerSearchCriteria} from '../owner-search/owner-search-criteria';
+import {OwnerSearchRequest} from '../owner-search/owner-search-request';
 import {OwnerDetail} from '../model/owner-detail';
 import {OwnerSearch} from '../model/owner-search.model';
 
@@ -16,7 +16,7 @@ export class OwnerService {
               private store: Store<AppState>) {
   }
 
-  fetchOwners(criteria: OwnerSearchCriteria) {
+  fetchOwners(criteria: OwnerSearchRequest) {
 
     console.log(criteria);
     let params = new HttpParams()
