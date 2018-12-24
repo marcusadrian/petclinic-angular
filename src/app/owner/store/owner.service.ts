@@ -32,6 +32,7 @@ export class OwnerService {
         .set('size', request.pageRequest.size.toString())
         .set('sort', request.pageRequest.sortBy.toString() + ',' + request.pageRequest.sortDirection);
     }
+    params = this.cleanUpHttpParams(params);
     // start spinner
     this.store.dispatch(new UI.StartLoading());
     // do rest call
@@ -65,6 +66,17 @@ export class OwnerService {
           this.store.dispatch(new UI.StopLoading());
           console.log(error);
         });
+  }
 
+  // remove null/undefined and empty
+  private cleanUpHttpParams(params: HttpParams): HttpParams {
+    let cleanedUpParams = new HttpParams();
+    params.keys()
+      .filter(key => {
+        const value = params.get(key);
+        return value && value.length > 0;
+      })
+      .forEach(key => cleanedUpParams = cleanedUpParams.set(key, params.get(key)));
+    return cleanedUpParams;
   }
 }
