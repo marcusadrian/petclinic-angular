@@ -8,7 +8,6 @@ import * as fromUi from '../../shared/ui.reducer';
 import * as fromOwner from '../../owner/store/owner.reducer';
 import {OwnerService} from '../store/owner.service';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {Page} from '../../model/Page';
 import {PageRequestBuilder} from '../../model/page-request';
 import {OwnerSearchRequest} from './owner-search-request';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -21,6 +20,7 @@ import {OwnerSearch} from '../model/owner-search.model';
 })
 export class OwnerSearchComponent implements OnInit {
 
+  // the reactive form definitions
   ownerSearchForm: FormGroup;
   lastName: FormControl;
   firstName: FormControl;
@@ -29,13 +29,15 @@ export class OwnerSearchComponent implements OnInit {
   telephone: FormControl;
   petName: FormControl;
 
+  // DTO containing all the necessary fields for the rest call
   ownerSearchRequest: OwnerSearchRequest = new OwnerSearchRequest();
 
+  // spinner
   isLoading$: Observable<boolean>;
 
+  // mat-table
   displayedColumns: string[] = ['name', 'address', 'city', 'telephone', 'petNames'];
   dataSource = new MatTableDataSource<OwnerSummary>();
-  page: Page;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -84,11 +86,11 @@ export class OwnerSearchComponent implements OnInit {
         this.ownerSearchRequest = search.request;
         const resp = search.response;
         this.dataSource.data = resp._embedded ? resp._embedded.owners : [];
-        this.page = resp.page;
-        if (this.page) {
-          this.paginator.pageSize = this.page.size;
-          this.paginator.length = this.page.totalElements;
-          this.paginator.pageIndex = this.page.number;
+        const page = resp.page;
+        if (page) {
+          this.paginator.pageSize = page.size;
+          this.paginator.length = page.totalElements;
+          this.paginator.pageIndex = page.number;
         }
         this.setFormValues(search.request);
       }
