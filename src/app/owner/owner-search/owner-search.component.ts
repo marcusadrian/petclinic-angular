@@ -30,7 +30,7 @@ export class OwnerSearchComponent implements OnInit {
   petName: FormControl;
 
   // DTO containing all the necessary fields for the rest call
-  ownerSearchRequest: OwnerSearchRequest = new OwnerSearchRequest();
+  ownerSearchRequest: OwnerSearchRequest = null;
 
   // spinner
   isLoading$: Observable<boolean>;
@@ -113,6 +113,7 @@ export class OwnerSearchComponent implements OnInit {
   onSubmit() {
     this.paginator.pageIndex = 0;
     // only take into account a criteria change when user validates pressing the submit button
+    this.ownerSearchRequest = new OwnerSearchRequest();
     this.ownerSearchRequest.lastName = this.lastName.value;
     this.ownerSearchRequest.firstName = this.firstName.value;
     this.ownerSearchRequest.address = this.address.value;
@@ -143,5 +144,13 @@ export class OwnerSearchComponent implements OnInit {
   onAskForDetail(id: number) {
     console.log('onAskForDetail : ' + id);
     this.router.navigate(['../', id], {relativeTo: this.route});
+  }
+
+  noOwnersFound(): boolean {
+    return this.ownerSearchRequest != null && this.paginator.length === 0;
+  }
+
+  hideTable(): boolean {
+    return this.ownerSearchRequest == null || this.noOwnersFound();
   }
 }

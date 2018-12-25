@@ -60,8 +60,8 @@
     <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
   </form>
 </section>
-
-<div class="example-table-container">
+<div *ngIf="noOwnersFound()">No owners found.</div>
+<div class="example-table-container" [hidden]="hideTable()">
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"
          matSort matSortActive="name" matSortDisableClear matSortDirection="asc">
 
