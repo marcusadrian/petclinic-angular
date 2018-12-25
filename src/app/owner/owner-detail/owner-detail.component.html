@@ -20,4 +20,7 @@
     <mat-list-item>Birth Date : {{pet.birthDate}}</mat-list-item>
     <mat-list-item>Type : {{pet.type}}</mat-list-item>
   </mat-list>
+  <div *ngFor="let visit of pet.visits">
+    {{visit | json}}
+  </div>
 </div>

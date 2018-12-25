@@ -11,7 +11,7 @@ import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
 import {PageRequestBuilder} from '../../model/rest/page-request';
 import {OwnerSearchRequest} from './owner-search-request';
 import {ActivatedRoute, Router} from '@angular/router';
-import {OwnerSearch} from '../../model/owner/owner-search.model';
+import {OwnerSearch} from '../../model/owner/owner-search';
 
 @Component({
   selector: 'app-owner-search',

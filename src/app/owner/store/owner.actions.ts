@@ -1,6 +1,6 @@
 import {Action} from '@ngrx/store';
 import {OwnerDetail} from '../../model/owner/owner-detail';
-import {OwnerSearch} from '../../model/owner/owner-search.model';
+import {OwnerSearch} from '../../model/owner/owner-search';
 
 export const SET_OWNERS = '[Owner] Set Owners';
 export const SET_OWNER = '[Owner] Set Owner';

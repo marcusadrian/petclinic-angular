@@ -7,7 +7,7 @@ import * as UI from '../../shared/ui.actions';
 import * as Owner from '../../owner/store/owner.actions';
 import {OwnerSearchRequest} from '../owner-search/owner-search-request';
 import {OwnerDetail} from '../../model/owner/owner-detail';
-import {OwnerSearch} from '../../model/owner/owner-search.model';
+import {OwnerSearch} from '../../model/owner/owner-search';
 
 @Injectable()
 export class OwnerService {

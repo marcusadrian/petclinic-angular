@@ -1,4 +1,4 @@
-import {Pet} from '../pet/pet.model';
+import {Pet} from '../pet/pet';
 
 export interface OwnerDetail {
 
