@@ -1,4 +1,4 @@
-import {OwnerSummaryLinks} from './OwnerSummaryLinks';
+import {OwnerSummaryLinks} from './owner-summary-links';
 
 export interface OwnerSummary {
 

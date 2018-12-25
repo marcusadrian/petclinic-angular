@@ -9,3 +9,14 @@
   <mat-list-item>City : {{owner.city}}</mat-list-item>
   <mat-list-item>Telephone : {{owner.telephone}}</mat-list-item>
 </mat-list>
+
+<p>
+  Pets and Visits
+</p>
+
+<div *ngFor="let pet of owner.pets"></div>
+<mat-list>
+  <mat-list-item>Name : {{pet.name}}</mat-list-item>
+  <mat-list-item>Birth Date : {{pet.xx}}</mat-list-item>
+  <mat-list-item>Type : {{pet.type}}</mat-list-item>
+</mat-list>

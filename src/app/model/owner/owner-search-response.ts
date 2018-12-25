@@ -1,5 +1,5 @@
-import {OwnerSummary} from './OwnerSummary';
-import {Page} from '../../model/Page';
+import {OwnerSummary} from './owner-summary';
+import {Page} from '../rest/Page';
 
 export interface OwnerSearchResponse {
   _embedded?: Owners;

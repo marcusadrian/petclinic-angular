@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {OwnerSummary} from '../model/OwnerSummary';
+import {OwnerSummary} from '../../model/owner/owner-summary';
 import {FormControl, FormGroup} from '@angular/forms';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../app.reducer';
@@ -8,10 +8,10 @@ import * as fromUi from '../../shared/ui.reducer';
 import * as fromOwner from '../../owner/store/owner.reducer';
 import {OwnerService} from '../store/owner.service';
 import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
-import {PageRequestBuilder} from '../../model/page-request';
+import {PageRequestBuilder} from '../../model/rest/page-request';
 import {OwnerSearchRequest} from './owner-search-request';
 import {ActivatedRoute, Router} from '@angular/router';
-import {OwnerSearch} from '../model/owner-search.model';
+import {OwnerSearch} from '../../model/owner/owner-search.model';
 
 @Component({
   selector: 'app-owner-search',

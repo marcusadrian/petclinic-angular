@@ -1,8 +1,8 @@
 import {OwnerActions, SET_OWNER, SET_OWNERS} from './owner.actions';
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {StateId} from '../../StateId';
-import {OwnerDetail} from '../model/owner-detail';
-import {OwnerSearch} from '../model/owner-search.model';
+import {OwnerDetail} from '../../model/owner/owner-detail';
+import {OwnerSearch} from '../../model/owner/owner-search.model';
 
 export interface OwnerState {
   ownerSearch?: OwnerSearch;

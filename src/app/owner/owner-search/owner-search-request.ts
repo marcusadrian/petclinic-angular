@@ -1,4 +1,4 @@
-import {PageRequest} from '../../model/page-request';
+import {PageRequest} from '../../model/rest/page-request';
 
 export class OwnerSearchRequest {
 

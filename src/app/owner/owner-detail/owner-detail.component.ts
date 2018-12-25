@@ -5,7 +5,7 @@ import {Observable} from 'rxjs';
 import {AppState} from '../../app.reducer';
 import {OwnerService} from '../store/owner.service';
 import * as fromOwner from '../store/owner.reducer';
-import {OwnerDetail} from '../model/owner-detail';
+import {OwnerDetail} from '../../model/owner/owner-detail';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
