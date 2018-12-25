@@ -14,9 +14,10 @@
   Pets and Visits
 </p>
 
-<div *ngFor="let pet of owner.pets"></div>
-<mat-list>
-  <mat-list-item>Name : {{pet.name}}</mat-list-item>
-  <mat-list-item>Birth Date : {{pet.xx}}</mat-list-item>
-  <mat-list-item>Type : {{pet.type}}</mat-list-item>
-</mat-list>
+<div *ngFor="let pet of owner.pets">
+  <mat-list>
+    <mat-list-item>Name : {{pet.name}}</mat-list-item>
+    <mat-list-item>Birth Date : {{pet.birthDate}}</mat-list-item>
+    <mat-list-item>Type : {{pet.type}}</mat-list-item>
+  </mat-list>
+</div>

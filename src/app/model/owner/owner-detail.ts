@@ -1,3 +1,5 @@
+import {Pet} from '../pet/pet.model';
+
 export interface OwnerDetail {
 
   id: number;
@@ -6,6 +8,7 @@ export interface OwnerDetail {
   address: string;
   city: string;
   telephone: string;
+  pets: Pet[];
 
 }
 
