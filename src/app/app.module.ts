@@ -9,13 +9,17 @@ import {OwnerService} from './owner/store/owner.service';
 import {StoreModule} from '@ngrx/store';
 import {reducers} from './app.reducer';
 import {OwnerModule} from './owner/owner.module';
+import {HeaderComponent} from './header/header.component';
+import {SharedModule} from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    HeaderComponent
   ],
   imports: [
+    SharedModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

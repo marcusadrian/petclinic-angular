@@ -2,25 +2,29 @@
   Owner Information
 </p>
 
-<mat-list *ngIf="owner">
-  <mat-list-item>First Name : {{owner.firstName}}</mat-list-item>
-  <mat-list-item>Last Name : {{owner.lastName}}</mat-list-item>
-  <mat-list-item>Address : {{owner.address}}</mat-list-item>
-  <mat-list-item>City : {{owner.city}}</mat-list-item>
-  <mat-list-item>Telephone : {{owner.telephone}}</mat-list-item>
-</mat-list>
+<div *ngIf="owner">
 
-<p>
-  Pets and Visits
-</p>
-
-<div *ngFor="let pet of owner.pets">
   <mat-list>
-    <mat-list-item>Name : {{pet.name}}</mat-list-item>
-    <mat-list-item>Birth Date : {{pet.birthDate}}</mat-list-item>
-    <mat-list-item>Type : {{pet.type}}</mat-list-item>
+    <mat-list-item>First Name : {{owner.firstName}}</mat-list-item>
+    <mat-list-item>Last Name : {{owner.lastName}}</mat-list-item>
+    <mat-list-item>Address : {{owner.address}}</mat-list-item>
+    <mat-list-item>City : {{owner.city}}</mat-list-item>
+    <mat-list-item>Telephone : {{owner.telephone}}</mat-list-item>
   </mat-list>
-  <div *ngFor="let visit of pet.visits">
-    {{visit | json}}
+
+  <p>
+    Pets and Visits
+  </p>
+
+  <div *ngFor="let pet of owner.pets">
+    <mat-list>
+      <mat-list-item>Name : {{pet.name}}</mat-list-item>
+      <mat-list-item>Birth Date : {{pet.birthDate}}</mat-list-item>
+      <mat-list-item>Type : {{pet.type}}</mat-list-item>
+    </mat-list>
+    <div *ngFor="let visit of pet.visits">
+      {{visit | json}}
+    </div>
   </div>
+
 </div>
