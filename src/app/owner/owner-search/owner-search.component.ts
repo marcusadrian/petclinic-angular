@@ -42,13 +42,14 @@ export class OwnerSearchComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  private defaultPageSize = 5;
+
   constructor(
     private store: Store<AppState>,
     private ownerService: OwnerService,
     private router: Router,
     private route: ActivatedRoute) {
   }
-
 
   ngOnInit() {
     this.lastName = new FormControl('');
@@ -80,7 +81,11 @@ export class OwnerSearchComponent implements OnInit {
     this.isLoading$ = this.store.pipe(select(fromUi.getIsLoading));
     this.store.pipe(select(fromOwner.getOwnerSearch)).subscribe(
       (search: OwnerSearch) => {
-        if (!search) {
+        if (!search) { // initialisation at the very first time or after resetting
+          this.ownerSearchRequest = null;
+          this.paginator.pageSize = this.defaultPageSize;
+          this.paginator.length = 0;
+          this.paginator.pageIndex = 0;
           return;
         }
         this.ownerSearchRequest = search.request;
@@ -152,5 +157,10 @@ export class OwnerSearchComponent implements OnInit {
 
   hideTable(): boolean {
     return this.ownerSearchRequest == null || this.noOwnersFound();
+  }
+
+  onReset() {
+    // clean cache
+    this.ownerService.resetOwnerSearch();
   }
 }

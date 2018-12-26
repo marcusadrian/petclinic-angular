@@ -68,6 +68,10 @@ export class OwnerService {
         });
   }
 
+  resetOwnerSearch() {
+    this.store.dispatch(new Owner.SetOwners(null));
+  }
+
   // remove null/undefined and empty
   private cleanUpHttpParams(params: HttpParams): HttpParams {
     let cleanedUpParams = new HttpParams();

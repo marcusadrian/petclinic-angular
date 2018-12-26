@@ -55,7 +55,7 @@
     </mat-form-field>
     <div>
       <button [disabled]="isLoading$ | async" type="submit" mat-raised-button color="primary">Submit</button>
-      <button [disabled]="isLoading$ | async" type="reset" mat-raised-button>Reset</button>
+      <button [disabled]="isLoading$ | async" type="reset" (click)="onReset()" mat-raised-button>Reset</button>
     </div>
     <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
   </form>
