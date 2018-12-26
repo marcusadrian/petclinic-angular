@@ -30,7 +30,7 @@ export class OwnerSearchComponent implements OnInit {
   petName: FormControl;
 
   // DTO containing all the necessary fields for the rest call
-  ownerSearchRequest: OwnerSearchRequest = null;
+  ownerSearchRequest: OwnerSearchRequest;
 
   // spinner
   isLoading$: Observable<boolean>;
@@ -41,8 +41,6 @@ export class OwnerSearchComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-
-  private defaultPageSize = 5;
 
   constructor(
     private store: Store<AppState>,
@@ -83,9 +81,11 @@ export class OwnerSearchComponent implements OnInit {
       (search: OwnerSearch) => {
         if (!search) { // initialisation at the very first time or after resetting
           this.ownerSearchRequest = null;
-          this.paginator.pageSize = this.defaultPageSize;
+          this.paginator.pageSize = 5;
           this.paginator.length = 0;
           this.paginator.pageIndex = 0;
+          this.sort.active = 'name';
+          this.sort.direction = 'asc';
           return;
         }
         this.ownerSearchRequest = search.request;

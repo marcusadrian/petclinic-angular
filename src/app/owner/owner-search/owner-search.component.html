@@ -62,8 +62,7 @@
 </section>
 <div *ngIf="noOwnersFound()">No owners found.</div>
 <div class="example-table-container" [hidden]="hideTable()">
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8"
-         matSort matSortActive="name" matSortDisableClear matSortDirection="asc">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8" matSort matSortDisableClear>
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
