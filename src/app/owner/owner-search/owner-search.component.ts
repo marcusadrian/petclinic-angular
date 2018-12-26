@@ -97,13 +97,16 @@ export class OwnerSearchComponent implements OnInit {
           this.paginator.length = page.totalElements;
           this.paginator.pageIndex = page.number;
         }
+        const pageRequest = this.ownerSearchRequest.pageRequest;
+        this.sort.active = this.keyBySort(pageRequest.sortBy);
+        this.sort.direction = pageRequest.sortDirection;
         this.setFormValues(search.request);
       }
     );
   }
 
   // to conform to the last state in case we come back to this page (content cache)
-  setFormValues(criteria: OwnerSearchRequest) {
+  private setFormValues(criteria: OwnerSearchRequest) {
     if (!criteria) {
       return;
     }
@@ -128,7 +131,7 @@ export class OwnerSearchComponent implements OnInit {
     this.fetchOwners();
   }
 
-  fetchOwners() {
+  private fetchOwners() {
     this.ownerSearchRequest.pageRequest = new PageRequestBuilder()
       .page(this.paginator.pageIndex)
       .size(this.paginator.pageSize)
@@ -139,9 +142,16 @@ export class OwnerSearchComponent implements OnInit {
     this.ownerService.fetchOwners(this.ownerSearchRequest);
   }
 
-  sortByKey(sort: string) {
+  private sortByKey(sort: string) {
     if (sort === 'name') {
       return 'lastName';
+    }
+    return sort;
+  }
+
+  private keyBySort(sort: string) {
+    if (sort === 'lastName') {
+      return 'name';
     }
     return sort;
   }

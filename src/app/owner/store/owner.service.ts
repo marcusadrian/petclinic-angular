@@ -26,11 +26,12 @@ export class OwnerService {
       .set('city', request.city)
       .set('telephone', request.telephone)
       .set('petName', request.petName);
-    if (request.pageRequest) {
+    const pageRequest = request.pageRequest;
+    if (pageRequest) {
       params = params
-        .set('page', request.pageRequest.page.toString())
-        .set('size', request.pageRequest.size.toString())
-        .set('sort', request.pageRequest.sortBy.toString() + ',' + request.pageRequest.sortDirection);
+        .set('page', pageRequest.page.toString())
+        .set('size', pageRequest.size.toString())
+        .set('sort', pageRequest.sortBy.toString() + ',' + pageRequest.sortDirection);
     }
     params = this.cleanUpHttpParams(params);
     // start spinner
