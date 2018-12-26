@@ -7,7 +7,7 @@ import {Observable} from 'rxjs';
 import * as fromUi from '../../shared/ui.reducer';
 import * as fromOwner from '../../owner/store/owner.reducer';
 import {OwnerService} from '../store/owner.service';
-import {MatPaginator, MatSort, MatTableDataSource} from '@angular/material';
+import {MatPaginator, MatSort} from '@angular/material';
 import {PageRequestBuilder} from '../../model/rest/page-request';
 import {OwnerSearchRequest} from './owner-search-request';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -37,7 +37,7 @@ export class OwnerSearchComponent implements OnInit {
 
   // mat-table
   displayedColumns: string[] = ['name', 'address', 'city', 'telephone', 'petNames', 'action'];
-  dataSource = new MatTableDataSource<OwnerSummary>();
+  dataSource: OwnerSummary[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -81,6 +81,7 @@ export class OwnerSearchComponent implements OnInit {
       (search: OwnerSearch) => {
         if (!search) { // initialisation at the very first time or after resetting
           this.ownerSearchRequest = null;
+          this.dataSource = [];
           this.paginator.pageSize = 5;
           this.paginator.length = 0;
           this.paginator.pageIndex = 0;
@@ -90,7 +91,7 @@ export class OwnerSearchComponent implements OnInit {
         }
         this.ownerSearchRequest = search.request;
         const resp = search.response;
-        this.dataSource.data = resp._embedded ? resp._embedded.owners : [];
+        this.dataSource = resp._embedded ? resp._embedded.owners : [];
         const page = resp.page;
         if (page) {
           this.paginator.pageSize = page.size;
@@ -142,11 +143,11 @@ export class OwnerSearchComponent implements OnInit {
     this.ownerService.fetchOwners(this.ownerSearchRequest);
   }
 
-  private sortByKey(sort: string) {
-    if (sort === 'name') {
+  private sortByKey(key: string) {
+    if (key === 'name') {
       return 'lastName';
     }
-    return sort;
+    return key;
   }
 
   private keyBySort(sort: string) {
