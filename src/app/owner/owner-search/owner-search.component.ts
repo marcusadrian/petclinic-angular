@@ -87,6 +87,8 @@ export class OwnerSearchComponent implements OnInit {
           this.paginator.pageIndex = 0;
           this.sort.active = 'name';
           this.sort.direction = 'asc';
+          // is working but header arrow won't align when resetting due to angular material bug :
+          // https://github.com/angular/material2/pull/13171
           return;
         }
         this.ownerSearchRequest = search.request;
