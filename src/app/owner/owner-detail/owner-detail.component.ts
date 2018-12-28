@@ -6,7 +6,7 @@ import {AppState} from '../../app.reducer';
 import {OwnerService} from '../store/owner.service';
 import * as fromOwner from '../store/owner.reducer';
 import {OwnerDetail} from '../../model/owner/owner-detail';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-owner-detail',
@@ -20,16 +20,20 @@ export class OwnerDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private store: Store<AppState>,
     private ownerService: OwnerService) {
   }
 
   ngOnInit() {
     this.isLoading$ = this.store.pipe(select(fromUi.getIsLoading));
+    this.ownerService.fetchOwner(this.route.snapshot.params['id']);
     this.store.pipe(select(fromOwner.getOwner)).subscribe(
       (owner: OwnerDetail) => this.owner = owner
     );
-    this.ownerService.fetchOwner(this.route.snapshot.params['id']);
   }
 
+  toOwnerEdit() {
+    this.router.navigate(['edit'], {relativeTo: this.route});
+  }
 }

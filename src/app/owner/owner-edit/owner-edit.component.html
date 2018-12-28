@@ -1,0 +1,51 @@
+<form
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="10px"
+  [formGroup]="ownerEditForm"
+  (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input
+      type="text"
+      matInput
+      placeholder="first name"
+      formControlName="firstName">
+    <mat-hint>starting with</mat-hint>
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      type="text"
+      matInput
+      placeholder="last name"
+      formControlName="lastName">
+    <mat-hint>starting with</mat-hint>
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      type="text"
+      matInput
+      placeholder="address"
+      formControlName="address">
+    <mat-hint>containing</mat-hint>
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      type="text"
+      matInput
+      placeholder="city"
+      formControlName="city">
+    <mat-hint>starting with</mat-hint>
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      type="text"
+      matInput
+      placeholder="telephone"
+      formControlName="telephone">
+    <mat-hint>containing</mat-hint>
+  </mat-form-field>
+  <div>
+    <button [disabled]="isLoading$ | async" type="submit" mat-raised-button color="primary">Submit</button>
+  </div>
+  <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
+</form>

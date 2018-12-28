@@ -36,7 +36,7 @@ export class OwnerSearchComponent implements OnInit {
   isLoading$: Observable<boolean>;
 
   // mat-table
-  displayedColumns: string[] = ['name', 'address', 'city', 'telephone', 'petNames', 'action'];
+  displayedColumns: string[] = ['name', 'address', 'city', 'telephone', 'petNames', 'show'];
   dataSource: OwnerSummary[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
