@@ -69,6 +69,16 @@ export class OwnerEditComponent implements OnInit {
   }
 
   onSubmit() {
-
+    const owner = new OwnerDetail({
+      id: this.ownerId,
+      firstName: this.firstName.value,
+      lastName: this.lastName.value,
+      address: this.address.value,
+      city: this.city.value,
+      telephone: this.telephone.value
+    });
+    this.ownerService.updateOwner(owner).subscribe(value => {
+      this.router.navigate(['../'], {relativeTo: this.route});
+    });
   }
 }
