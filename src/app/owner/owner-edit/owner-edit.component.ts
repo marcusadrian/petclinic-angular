@@ -23,6 +23,7 @@ export class OwnerEditComponent implements OnInit {
   address: FormControl;
   city: FormControl;
   telephone: FormControl;
+  private ownerId: number;
 
 
   // spinner
@@ -57,6 +58,7 @@ export class OwnerEditComponent implements OnInit {
         if (!owner) {
           return;
         }
+        this.ownerId = owner.id;
         this.firstName.setValue(owner.firstName);
         this.lastName.setValue(owner.lastName);
         this.address.setValue(owner.address);

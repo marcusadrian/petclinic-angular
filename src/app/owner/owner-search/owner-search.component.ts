@@ -124,13 +124,14 @@ export class OwnerSearchComponent implements OnInit {
   onSubmit() {
     this.paginator.pageIndex = 0;
     // only take into account a criteria change when user validates pressing the submit button
-    this.ownerSearchRequest = new OwnerSearchRequest();
-    this.ownerSearchRequest.lastName = this.lastName.value;
-    this.ownerSearchRequest.firstName = this.firstName.value;
-    this.ownerSearchRequest.address = this.address.value;
-    this.ownerSearchRequest.city = this.city.value;
-    this.ownerSearchRequest.telephone = this.telephone.value;
-    this.ownerSearchRequest.petName = this.petName.value;
+    this.ownerSearchRequest = new OwnerSearchRequest({
+      lastName: this.lastName.value,
+      firstName: this.firstName.value,
+      address: this.address.value,
+      city: this.city.value,
+      telephone: this.telephone.value,
+      petName: this.petName.value
+    });
     this.fetchOwners();
   }
 
