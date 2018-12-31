@@ -34,6 +34,7 @@ export class OwnerSearchComponent implements OnInit {
 
   // spinner
   isLoading$: Observable<boolean>;
+  private dataFetched = false;
 
   // mat-table
   displayedColumns: string[] = ['name', 'address', 'city', 'telephone', 'petNames', 'show'];
@@ -89,6 +90,7 @@ export class OwnerSearchComponent implements OnInit {
           this.sort.direction = 'asc';
           // sort is working but header arrow won't align when resetting due to angular material bug :
           // https://github.com/angular/material2/issues/10242
+          this.dataFetched = true;
           return;
         }
         this.ownerSearchRequest = search.request;
@@ -103,7 +105,11 @@ export class OwnerSearchComponent implements OnInit {
         const pageRequest = this.ownerSearchRequest.pageRequest;
         this.sort.active = this.keyBySort(pageRequest.sortBy);
         this.sort.direction = pageRequest.sortDirection;
-        this.setFormValues(search.request);
+        this.setFormValues(this.ownerSearchRequest);
+        if (!this.dataFetched) {
+          this.dataFetched = true;
+          this.fetchOwners();
+        }
       }
     );
   }
