@@ -8,8 +8,9 @@ const routes: Routes = [
   {
     path: 'owners', children: [
       {path: 'search', component: OwnerSearchComponent},
+      {path: 'new', component: OwnerEditComponent},
       {path: ':id', component: OwnerDetailComponent},
-      {path: ':id/edit', component: OwnerEditComponent},
+      {path: ':id/edit', component: OwnerEditComponent}
     ]
   }
 ];

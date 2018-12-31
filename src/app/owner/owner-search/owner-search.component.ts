@@ -177,4 +177,9 @@ export class OwnerSearchComponent implements OnInit {
     // clean cache
     this.ownerService.resetOwnerSearch();
   }
+
+  onAskForAddOwner() {
+    console.log('onAskForAddOwner');
+    this.router.navigate(['../new'], {relativeTo: this.route});
+  }
 }

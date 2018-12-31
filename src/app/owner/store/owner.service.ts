@@ -8,7 +8,7 @@ import * as Owner from '../../owner/store/owner.actions';
 import {OwnerSearchRequest} from '../owner-search/owner-search-request';
 import {OwnerDetail} from '../../model/owner/owner-detail';
 import {OwnerSearch} from '../../model/owner/owner-search';
-import {Observable} from 'rxjs';
+import {finalize} from 'rxjs/operators';
 
 @Injectable()
 export class OwnerService {
@@ -70,21 +70,22 @@ export class OwnerService {
         });
   }
 
-  updateOwner(owner: OwnerDetail): Observable<Object> {
+  updateOwner(owner: OwnerDetail) {
     console.log('update owner ' + JSON.stringify(owner));
     // start spinner
     this.store.dispatch(new UI.StartLoading());
     // do rest call
-    const result$ = this.httpClient.post('http://localhost:8080/my-petclinic/owners/' + owner.id, owner);
-    result$.subscribe(() => {
-        // stop spinner
-        this.store.dispatch(new UI.StopLoading());
-      },
-      error => {
-        this.store.dispatch(new UI.StopLoading());
-        console.log(error);
-      });
-    return result$;
+    return this.httpClient.post('http://localhost:8080/my-petclinic/owners/' + owner.id, owner)
+      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+  }
+
+  createOwner(owner: OwnerDetail) {
+    console.log('create owner ' + JSON.stringify(owner));
+    // start spinner
+    this.store.dispatch(new UI.StartLoading());
+    // do rest call
+    return this.httpClient.put<OwnerDetail>('http://localhost:8080/my-petclinic/owners', owner)
+      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 
   resetOwnerSearch() {

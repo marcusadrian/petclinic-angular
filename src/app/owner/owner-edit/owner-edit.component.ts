@@ -25,7 +25,6 @@ export class OwnerEditComponent implements OnInit {
   telephone: FormControl;
   private ownerId: number;
 
-
   // spinner
   isLoading$: Observable<boolean>;
 
@@ -52,20 +51,23 @@ export class OwnerEditComponent implements OnInit {
     });
 
     this.isLoading$ = this.store.pipe(select(fromUi.getIsLoading));
-    this.ownerService.fetchOwner(this.route.snapshot.params['id']);
-    this.store.pipe(select(fromOwner.getOwner)).subscribe(
-      (owner: OwnerDetail) => {
-        if (!owner) {
-          return;
+    const id = this.route.snapshot.params['id'];
+    if (id) { // update case
+      this.ownerService.fetchOwner(this.route.snapshot.params['id']);
+      this.store.pipe(select(fromOwner.getOwner)).subscribe(
+        (owner: OwnerDetail) => {
+          if (!owner) {
+            return;
+          }
+          this.ownerId = owner.id;
+          this.firstName.setValue(owner.firstName);
+          this.lastName.setValue(owner.lastName);
+          this.address.setValue(owner.address);
+          this.city.setValue(owner.city);
+          this.telephone.setValue(owner.telephone);
         }
-        this.ownerId = owner.id;
-        this.firstName.setValue(owner.firstName);
-        this.lastName.setValue(owner.lastName);
-        this.address.setValue(owner.address);
-        this.city.setValue(owner.city);
-        this.telephone.setValue(owner.telephone);
-      }
-    );
+      );
+    }
   }
 
   onSubmit() {
@@ -77,8 +79,14 @@ export class OwnerEditComponent implements OnInit {
       city: this.city.value,
       telephone: this.telephone.value
     });
-    this.ownerService.updateOwner(owner).subscribe(value => {
-      this.router.navigate(['../'], {relativeTo: this.route});
-    });
+    if (this.ownerId) { // update case : id value exists
+      this.ownerService.updateOwner(owner).subscribe(value => {
+        this.router.navigate(['../'], {relativeTo: this.route});
+      });
+    } else { // create case : id value is yet absent
+      this.ownerService.createOwner(owner).subscribe(createdOwner => {
+        this.router.navigate(['../', createdOwner.id], {relativeTo: this.route});
+      });
+    }
   }
 }
