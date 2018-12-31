@@ -1,20 +1,29 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {OwnerSearchResponse} from '../../model/owner/owner-search-response';
-import {Store} from '@ngrx/store';
+import {select, Store} from '@ngrx/store';
 import {AppState} from '../../app.reducer';
 import * as UI from '../../shared/ui.actions';
 import * as Owner from '../../owner/store/owner.actions';
 import {OwnerSearchRequest} from '../owner-search/owner-search-request';
 import {OwnerDetail} from '../../model/owner/owner-detail';
 import {OwnerSearch} from '../../model/owner/owner-search';
-import {finalize} from 'rxjs/operators';
+import {finalize, take} from 'rxjs/operators';
+import * as fromOwner from './owner.reducer';
 
 @Injectable()
 export class OwnerService {
 
   constructor(private httpClient: HttpClient,
               private store: Store<AppState>) {
+  }
+
+  refreshDataForExistingSearch() {
+    this.store.pipe(select(fromOwner.getOwnerSearch), take(1)).subscribe((search: OwnerSearch) => {
+      if (search && search.request) {
+        this.fetchOwners(search.request);
+      }
+    });
   }
 
   fetchOwners(request: OwnerSearchRequest) {
