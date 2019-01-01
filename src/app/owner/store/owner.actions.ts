@@ -1,14 +1,14 @@
 import {Action} from '@ngrx/store';
 import {OwnerDetail} from '../../model/owner/owner-detail';
-import {OwnerSearch} from '../../model/owner/owner-search';
+import {OwnerSearchRequest} from '../owner-search/owner-search-request';
 
-export const SET_OWNERS = '[Owner] Set Owners';
+export const SET_OWNER_SEARCH_REQUEST = '[Owner] Set Owners';
 export const SET_OWNER = '[Owner] Set Owner';
 
-export class SetOwners implements Action {
-  readonly type = SET_OWNERS;
+export class SetOwnerSearchRequest implements Action {
+  readonly type = SET_OWNER_SEARCH_REQUEST;
 
-  constructor(public payload: OwnerSearch) {
+  constructor(public payload: OwnerSearchRequest) {
   }
 }
 
@@ -19,4 +19,4 @@ export class SetOwner implements Action {
   }
 }
 
-export type OwnerActions = SetOwners | SetOwner;
+export type OwnerActions = SetOwnerSearchRequest | SetOwner;

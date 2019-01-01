@@ -1,11 +1,11 @@
-import {OwnerActions, SET_OWNER, SET_OWNERS} from './owner.actions';
+import {OwnerActions, SET_OWNER, SET_OWNER_SEARCH_REQUEST} from './owner.actions';
 import {createFeatureSelector, createSelector} from '@ngrx/store';
 import {StateId} from '../../StateId';
 import {OwnerDetail} from '../../model/owner/owner-detail';
-import {OwnerSearch} from '../../model/owner/owner-search';
+import {OwnerSearchRequest} from '../owner-search/owner-search-request';
 
 export interface OwnerState {
-  ownerSearch?: OwnerSearch;
+  ownerSearchRequest?: OwnerSearchRequest;
   owner?: OwnerDetail;
 }
 
@@ -13,10 +13,10 @@ const initialState: OwnerState = {};
 
 export function ownerReducer(state = initialState, action: OwnerActions) {
   switch (action.type) {
-    case SET_OWNERS:
+    case SET_OWNER_SEARCH_REQUEST:
       return {
         ...state,
-        ownerSearch: action.payload
+        ownerSearchRequest: action.payload
       };
     case SET_OWNER:
       return {
@@ -30,6 +30,6 @@ export function ownerReducer(state = initialState, action: OwnerActions) {
 }
 
 const getOwnerState = createFeatureSelector<OwnerState>(StateId.owner);
-export const getOwnerSearch = createSelector(getOwnerState, (state: OwnerState) => state.ownerSearch);
+export const getOwnerSearchRequest = createSelector(getOwnerState, (state: OwnerState) => state.ownerSearchRequest);
 export const getOwner = createSelector(getOwnerState, (state: OwnerState) => state.owner);
 

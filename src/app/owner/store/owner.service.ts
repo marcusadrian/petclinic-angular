@@ -1,15 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from '@angular/common/http';
 import {OwnerSearchResponse} from '../../model/owner/owner-search-response';
-import {select, Store} from '@ngrx/store';
+import {Store} from '@ngrx/store';
 import {AppState} from '../../app.reducer';
 import * as UI from '../../shared/ui.actions';
 import * as Owner from '../../owner/store/owner.actions';
 import {OwnerSearchRequest} from '../owner-search/owner-search-request';
 import {OwnerDetail} from '../../model/owner/owner-detail';
-import {OwnerSearch} from '../../model/owner/owner-search';
-import {finalize, take} from 'rxjs/operators';
-import * as fromOwner from './owner.reducer';
+import {finalize, tap} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class OwnerService {
@@ -18,15 +17,7 @@ export class OwnerService {
               private store: Store<AppState>) {
   }
 
-  refreshDataForExistingSearch() {
-    this.store.pipe(select(fromOwner.getOwnerSearch), take(1)).subscribe((search: OwnerSearch) => {
-      if (search && search.request) {
-        this.fetchOwners(search.request);
-      }
-    });
-  }
-
-  fetchOwners(request: OwnerSearchRequest) {
+  fetchOwners(request: OwnerSearchRequest): Observable<OwnerSearchResponse> {
 
     console.log(request);
     let params = new HttpParams()
@@ -47,17 +38,13 @@ export class OwnerService {
     // start spinner
     this.store.dispatch(new UI.StartLoading());
     // do rest call
-    this.httpClient.get<OwnerSearchResponse>('http://localhost:8080/my-petclinic/owners/search', {params: params})
-      .subscribe((ownerSearchResponse: OwnerSearchResponse) => {
-          // stop spinner
-          this.store.dispatch(new UI.StopLoading());
-          // put into store
-          this.store.dispatch(new Owner.SetOwners(new OwnerSearch(request, ownerSearchResponse)));
-        },
-        error => {
-          this.store.dispatch(new UI.StopLoading());
-          console.log(error);
-        });
+    return this.httpClient.get<OwnerSearchResponse>('http://localhost:8080/my-petclinic/owners/search', {params: params})
+      .pipe(
+        tap(() => {
+          this.store.dispatch(new Owner.SetOwnerSearchRequest(request));
+        }),
+        finalize(() => this.store.dispatch(new UI.StopLoading()))
+      );
 
   }
 
@@ -98,7 +85,7 @@ export class OwnerService {
   }
 
   resetOwnerSearch() {
-    this.store.dispatch(new Owner.SetOwners(null));
+    this.store.dispatch(new Owner.SetOwnerSearchRequest(null));
   }
 
   // remove null/undefined and empty

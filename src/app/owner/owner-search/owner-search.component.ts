@@ -11,7 +11,8 @@ import {MatPaginator, MatSort} from '@angular/material';
 import {PageRequestBuilder} from '../../model/rest/page-request';
 import {OwnerSearchRequest} from './owner-search-request';
 import {ActivatedRoute, Router} from '@angular/router';
-import {OwnerSearch} from '../../model/owner/owner-search';
+import {take} from 'rxjs/operators';
+import {OwnerSearchResponse} from '../../model/owner/owner-search-response';
 
 @Component({
   selector: 'app-owner-search',
@@ -50,6 +51,46 @@ export class OwnerSearchComponent implements OnInit {
   }
 
   ngOnInit() {
+    // create reactive form
+    this.createForm();
+
+    // register sort and page listener (angular material)
+    this.sort.sortChange.subscribe(() => {
+      // If the user changes the sort order, reset back to the first page.
+      this.paginator.pageIndex = 0;
+      this.fetchOwners();
+    });
+
+    this.paginator.page.subscribe(() => {
+      this.fetchOwners();
+    });
+
+    // listen to loading (showing spinner while loading)
+    this.isLoading$ = this.store.pipe(select(fromUi.getIsLoading));
+    // prepare component state
+    this.store.pipe(select(fromOwner.getOwnerSearchRequest), take(1)).subscribe(
+      (ownerSearchRequest: OwnerSearchRequest) => {
+        console.log('loading from store : ' + ownerSearchRequest);
+        if (ownerSearchRequest) { // initialisation at the very first time or after resetting
+          this.ownerSearchRequest = ownerSearchRequest;
+          const pageRequest = this.ownerSearchRequest.pageRequest;
+          this.paginator.pageSize = pageRequest.size;
+          this.paginator.pageIndex = pageRequest.page;
+          this.sort.active = this.keyBySort(pageRequest.sortBy);
+          this.sort.direction = pageRequest.sortDirection;
+          this.setFormValues(ownerSearchRequest);
+          this.fetchOwners();
+
+        } else {
+          this.reset();
+          // sort is working but header arrow won't align when resetting due to angular material bug :
+          // https://github.com/angular/material2/issues/10242
+        }
+      }
+    );
+  }
+
+  private createForm() {
     this.lastName = new FormControl('');
     this.firstName = new FormControl('');
     this.address = new FormControl('');
@@ -65,49 +106,6 @@ export class OwnerSearchComponent implements OnInit {
       telephone: this.telephone,
       petName: this.petName,
     });
-
-    this.sort.sortChange.subscribe(() => {
-      // If the user changes the sort order, reset back to the first page.
-      this.paginator.pageIndex = 0;
-      this.fetchOwners();
-    });
-
-    this.paginator.page.subscribe(() => {
-      this.fetchOwners();
-    });
-
-    this.isLoading$ = this.store.pipe(select(fromUi.getIsLoading));
-    this.store.pipe(select(fromOwner.getOwnerSearch)).subscribe(
-      (search: OwnerSearch) => {
-        if (!search) { // initialisation at the very first time or after resetting
-          this.ownerSearchRequest = null;
-          this.dataSource = [];
-          this.paginator.pageSize = 5;
-          this.paginator.length = 0;
-          this.paginator.pageIndex = 0;
-          this.sort.active = 'name';
-          this.sort.direction = 'asc';
-          // sort is working but header arrow won't align when resetting due to angular material bug :
-          // https://github.com/angular/material2/issues/10242
-          return;
-        }
-        this.ownerSearchRequest = search.request;
-        const resp = search.response;
-        this.dataSource = resp._embedded ? resp._embedded.owners : [];
-        const page = resp.page;
-        if (page) {
-          this.paginator.pageSize = page.size;
-          this.paginator.length = page.totalElements;
-          this.paginator.pageIndex = page.number;
-        }
-        const pageRequest = this.ownerSearchRequest.pageRequest;
-        this.sort.active = this.keyBySort(pageRequest.sortBy);
-        this.sort.direction = pageRequest.sortDirection;
-        this.setFormValues(this.ownerSearchRequest);
-      }
-    );
-    // refresh the data in case of an existing search request in the store
-    this.ownerService.refreshDataForExistingSearch();
   }
 
   // to conform to the last state in case we come back to this page (content cache)
@@ -145,7 +143,13 @@ export class OwnerSearchComponent implements OnInit {
       .sortDirection(this.sort.direction)
       .build();
     console.log(JSON.stringify(this.ownerSearchRequest));
-    this.ownerService.fetchOwners(this.ownerSearchRequest);
+    this.ownerService.fetchOwners(this.ownerSearchRequest).subscribe((resp: OwnerSearchResponse) => {
+      this.dataSource = resp._embedded ? resp._embedded.owners : [];
+      const page = resp.page;
+      this.paginator.pageSize = page.size;
+      this.paginator.length = page.totalElements;
+      this.paginator.pageIndex = page.number;
+    });
   }
 
   private sortByKey(key: string) {
@@ -178,6 +182,17 @@ export class OwnerSearchComponent implements OnInit {
   onReset() {
     // clean cache
     this.ownerService.resetOwnerSearch();
+    this.reset();
+  }
+
+  private reset() {
+    this.ownerSearchRequest = null;
+    this.dataSource = [];
+    this.paginator.pageSize = 5;
+    this.paginator.length = 0;
+    this.paginator.pageIndex = 0;
+    this.sort.active = 'name';
+    this.sort.direction = 'asc';
   }
 
   onAskForAddOwner() {
