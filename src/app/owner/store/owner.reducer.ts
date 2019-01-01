@@ -14,7 +14,7 @@ export function ownerReducer(state = initialState, action: OwnerActions) {
     case SET_OWNER_SEARCH_REQUEST:
       return {
         ...state,
-        ownerSearchRequest: action.payload
+        ownerSearchRequest: {...action.payload}
       };
     default: {
       return state;

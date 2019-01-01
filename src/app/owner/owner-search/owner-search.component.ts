@@ -70,7 +70,7 @@ export class OwnerSearchComponent implements OnInit {
     // prepare component state
     this.store.pipe(select(fromOwner.getOwnerSearchRequest), take(1)).subscribe(
       (ownerSearchRequest: OwnerSearchRequest) => {
-        console.log('loading from store : ' + ownerSearchRequest);
+        console.log('loading from store : ' + JSON.stringify(ownerSearchRequest));
         if (ownerSearchRequest) { // initialisation at the very first time or after resetting
           this.ownerSearchRequest = ownerSearchRequest;
           const pageRequest = this.ownerSearchRequest.pageRequest;
