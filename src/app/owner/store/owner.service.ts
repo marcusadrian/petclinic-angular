@@ -48,22 +48,15 @@ export class OwnerService {
 
   }
 
-  fetchOwner(id: number) {
+  fetchOwner(id: number): Observable<OwnerDetail> {
     console.log('fetching owner ' + id + '[=id]');
     // start spinner
     this.store.dispatch(new UI.StartLoading());
     // do rest call
-    this.httpClient.get<OwnerDetail>('http://localhost:8080/my-petclinic/owners/' + id)
-      .subscribe((owner: OwnerDetail) => {
-          // stop spinner
-          this.store.dispatch(new UI.StopLoading());
-          // put into store
-          this.store.dispatch(new Owner.SetOwner(owner));
-        },
-        error => {
-          this.store.dispatch(new UI.StopLoading());
-          console.log(error);
-        });
+    return this.httpClient.get<OwnerDetail>('http://localhost:8080/my-petclinic/owners/' + id)
+      .pipe(
+        finalize(() => this.store.dispatch(new UI.StopLoading()))
+      );
   }
 
   updateOwner(owner: OwnerDetail) {

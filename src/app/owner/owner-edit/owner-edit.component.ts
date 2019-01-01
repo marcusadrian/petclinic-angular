@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {select, Store} from '@ngrx/store';
 import * as fromUi from '../../shared/ui.reducer';
 import {AppState} from '../../app.reducer';
-import * as fromOwner from '../store/owner.reducer';
 import {OwnerDetail} from '../../model/owner/owner-detail';
 import {OwnerService} from '../store/owner.service';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -53,8 +52,7 @@ export class OwnerEditComponent implements OnInit {
     this.isLoading$ = this.store.pipe(select(fromUi.getIsLoading));
     const id = this.route.snapshot.params['id'];
     if (id) { // update case
-      this.ownerService.fetchOwner(this.route.snapshot.params['id']);
-      this.store.pipe(select(fromOwner.getOwner)).subscribe(
+      this.ownerService.fetchOwner(this.route.snapshot.params['id']).subscribe(
         (owner: OwnerDetail) => {
           if (!owner) {
             return;

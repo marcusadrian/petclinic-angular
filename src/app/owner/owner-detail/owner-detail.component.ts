@@ -4,7 +4,6 @@ import * as fromUi from '../../shared/ui.reducer';
 import {Observable} from 'rxjs';
 import {AppState} from '../../app.reducer';
 import {OwnerService} from '../store/owner.service';
-import * as fromOwner from '../store/owner.reducer';
 import {OwnerDetail} from '../../model/owner/owner-detail';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -27,10 +26,8 @@ export class OwnerDetailComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading$ = this.store.pipe(select(fromUi.getIsLoading));
-    this.ownerService.fetchOwner(this.route.snapshot.params['id']);
-    this.store.pipe(select(fromOwner.getOwner)).subscribe(
-      (owner: OwnerDetail) => this.owner = owner
-    );
+    this.ownerService.fetchOwner(this.route.snapshot.params['id'])
+      .subscribe((owner: OwnerDetail) => this.owner = owner);
   }
 
   toOwnerEdit() {
