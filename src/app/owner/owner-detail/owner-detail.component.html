@@ -13,6 +13,7 @@
   </mat-list>
 
   <button type="button" mat-raised-button color="primary" (click)="toOwnerEdit()">Edit Owner</button>
+  <button type="button" mat-raised-button color="primary" (click)="toAddNewPet()">Add New Pet</button>
 
   <p>
     Pets and Visits
@@ -27,6 +28,7 @@
     <div *ngFor="let visit of pet.visits">
       {{visit | json}}
     </div>
+    <button type="button" mat-raised-button color="primary" (click)="toEditPet(pet)">Edit Pet</button>
   </div>
 
 </div>

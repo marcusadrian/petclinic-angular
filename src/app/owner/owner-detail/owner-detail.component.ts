@@ -6,6 +6,7 @@ import {AppState} from '../../app.reducer';
 import {OwnerService} from '../store/owner.service';
 import {OwnerDetail} from '../../model/owner/owner-detail';
 import {ActivatedRoute, Router} from '@angular/router';
+import {Pet} from '../../model/pet/pet';
 
 @Component({
   selector: 'app-owner-detail',
@@ -32,5 +33,13 @@ export class OwnerDetailComponent implements OnInit {
 
   toOwnerEdit() {
     this.router.navigate(['edit'], {relativeTo: this.route});
+  }
+
+  toAddNewPet() {
+    this.router.navigate(['pets', 'new'], {relativeTo: this.route});
+  }
+
+  toEditPet(pet: Pet) {
+    this.router.navigate(['pets', pet.id, 'edit'], {relativeTo: this.route});
   }
 }

@@ -9,6 +9,7 @@ import {OwnerSearchRequest} from '../owner-search/owner-search-request';
 import {OwnerDetail} from '../../model/owner/owner-detail';
 import {finalize, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
+import {Pet} from '../../model/pet/pet';
 
 @Injectable()
 export class OwnerService {
@@ -54,6 +55,23 @@ export class OwnerService {
     this.store.dispatch(new UI.StartLoading());
     // do rest call
     return this.httpClient.get<OwnerDetail>('http://localhost:8080/my-petclinic/owners/' + id)
+      .pipe(
+        finalize(() => this.store.dispatch(new UI.StopLoading()))
+      );
+  }
+
+  fetchPet(ownerId: number, petId: number): Observable<Pet> {
+    // console.log('fetching pet ' + id + '[=id]');
+    let url: string;
+    if (petId) {
+      url = 'http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/' + petId;
+    } else {
+      url = 'http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/new';
+    }
+    // start spinner
+    this.store.dispatch(new UI.StartLoading());
+    // do rest call
+    return this.httpClient.get<Pet>(url)
       .pipe(
         finalize(() => this.store.dispatch(new UI.StopLoading()))
       );

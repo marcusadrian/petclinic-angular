@@ -1,0 +1,33 @@
+<form
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="10px"
+  [formGroup]="petEditForm"
+  (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input
+      type="text"
+      matInput
+      placeholder="name"
+      [formControl]="name">
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      type="text"
+      matInput
+      placeholder="birthday"
+      [formControl]="birthday">
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      type="text"
+      matInput
+      placeholder="type"
+      [formControl]="type">
+  </mat-form-field>
+  <div>
+    <button [disabled]="isLoading$ | async" type="submit" mat-raised-button color="primary">Submit</button>
+  </div>
+  <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
+</form>
+{{petTypes | json}}
