@@ -77,6 +77,15 @@ export class OwnerService {
       );
   }
 
+  createOwner(owner: OwnerDetail) {
+    console.log('create owner ' + JSON.stringify(owner));
+    // start spinner
+    this.store.dispatch(new UI.StartLoading());
+    // do rest call
+    return this.httpClient.put<OwnerDetail>('http://localhost:8080/my-petclinic/owners', owner)
+      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+  }
+
   updateOwner(owner: OwnerDetail) {
     console.log('update owner ' + JSON.stringify(owner));
     // start spinner
@@ -86,21 +95,21 @@ export class OwnerService {
       .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 
+  createPet(pet: PetEdit) {
+    console.log('create pet', JSON.stringify(pet));
+    // start spinner
+    this.store.dispatch(new UI.StartLoading());
+    // do rest call
+    return this.httpClient.put('http://localhost:8080/my-petclinic/owners/' + pet.ownerId + '/pets', pet)
+      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+  }
+
   updatePet(pet: PetEdit) {
     console.log('update pet', JSON.stringify(pet));
     // start spinner
     this.store.dispatch(new UI.StartLoading());
     // do rest call
     return this.httpClient.post('http://localhost:8080/my-petclinic/owners/' + pet.ownerId + '/pets/' + pet.id, pet)
-      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
-  }
-
-  createOwner(owner: OwnerDetail) {
-    console.log('create owner ' + JSON.stringify(owner));
-    // start spinner
-    this.store.dispatch(new UI.StartLoading());
-    // do rest call
-    return this.httpClient.put<OwnerDetail>('http://localhost:8080/my-petclinic/owners', owner)
       .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 

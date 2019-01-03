@@ -69,6 +69,10 @@ export class PetEditComponent implements OnInit {
       this.ownerService.updatePet(pet).subscribe(() => {
         this.router.navigate(['../../../'], {relativeTo: this.route});
       });
+    } else { // create case : id value is yet absent
+      this.ownerService.createPet(pet).subscribe(() => {
+        this.router.navigate(['../../'], {relativeTo: this.route});
+      });
     }
   }
 
