@@ -64,6 +64,12 @@ export class PetEditComponent implements OnInit {
     pet.name = this.name.value;
     pet.birthDate = this.birthday.value;
     pet.type = this.petTypes.filter(petType => petType.id === this.type.value)[0];
-    console.log(JSON.stringify(pet));
+
+    if (this.petId) { // update case : id value exists
+      this.ownerService.updatePet(pet).subscribe(() => {
+        this.router.navigate(['../../../'], {relativeTo: this.route});
+      });
+    }
   }
+
 }

@@ -86,6 +86,15 @@ export class OwnerService {
       .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 
+  updatePet(pet: PetEdit) {
+    console.log('update pet', JSON.stringify(pet));
+    // start spinner
+    this.store.dispatch(new UI.StartLoading());
+    // do rest call
+    return this.httpClient.post('http://localhost:8080/my-petclinic/owners/' + pet.ownerId + '/pets/' + pet.id, pet)
+      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+  }
+
   createOwner(owner: OwnerDetail) {
     console.log('create owner ' + JSON.stringify(owner));
     // start spinner
