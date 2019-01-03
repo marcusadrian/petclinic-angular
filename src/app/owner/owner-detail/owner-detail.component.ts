@@ -27,7 +27,7 @@ export class OwnerDetailComponent implements OnInit {
 
   ngOnInit() {
     this.isLoading$ = this.store.pipe(select(fromUi.getIsLoading));
-    this.ownerService.fetchOwner(this.route.snapshot.params['id'])
+    this.ownerService.fetchOwner(this.route.snapshot.params['ownerId'])
       .subscribe((owner: OwnerDetail) => this.owner = owner);
   }
 

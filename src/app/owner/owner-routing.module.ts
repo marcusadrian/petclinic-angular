@@ -10,10 +10,10 @@ const routes: Routes = [
     path: 'owners', children: [
       {path: 'search', component: OwnerSearchComponent},
       {path: 'new', component: OwnerEditComponent},
-      {path: ':id', component: OwnerDetailComponent},
-      {path: ':id/edit', component: OwnerEditComponent},
-      {path: ':id/pets/new', component: PetEditComponent},
-      {path: ':id/pets/:petId/edit', component: PetEditComponent},
+      {path: ':ownerId', component: OwnerDetailComponent},
+      {path: ':ownerId/edit', component: OwnerEditComponent},
+      {path: ':ownerId/pets/new', component: PetEditComponent},
+      {path: ':ownerId/pets/:petId/edit', component: PetEditComponent},
     ]
   }
 ];

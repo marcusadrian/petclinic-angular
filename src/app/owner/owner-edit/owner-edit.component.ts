@@ -50,9 +50,9 @@ export class OwnerEditComponent implements OnInit {
     });
 
     this.isLoading$ = this.store.pipe(select(fromUi.getIsLoading));
-    const id = this.route.snapshot.params['id'];
+    const id = this.route.snapshot.params['ownerId'];
     if (id) { // update case
-      this.ownerService.fetchOwner(this.route.snapshot.params['id']).subscribe(
+      this.ownerService.fetchOwner(this.route.snapshot.params['ownerId']).subscribe(
         (owner: OwnerDetail) => {
           if (!owner) {
             return;
