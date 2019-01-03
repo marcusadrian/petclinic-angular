@@ -12,18 +12,16 @@
       [formControl]="name">
   </mat-form-field>
   <mat-form-field>
-    <input
-      type="text"
-      matInput
-      placeholder="birthday"
-      [formControl]="birthday">
+    <input matInput [matDatepicker]="datePicker" placeholder="birthdate" [formControl]="birthday">
+    <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+    <mat-datepicker #datePicker></mat-datepicker>
   </mat-form-field>
   <mat-form-field>
-    <input
-      type="text"
-      matInput
-      placeholder="type"
-      [formControl]="type">
+    <mat-select placeholder="type" [formControl]="type">
+      <mat-option *ngFor="let petType of petTypes" [value]="petType.id">
+        {{petType.name}}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
   <div>
     <button [disabled]="isLoading$ | async" type="submit" mat-raised-button color="primary">Submit</button>

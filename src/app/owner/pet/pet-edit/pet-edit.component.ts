@@ -7,6 +7,7 @@ import {AppState} from '../../../app.reducer';
 import * as fromUi from '../../../shared/ui.reducer';
 import {NamedItem} from '../../../model/general/named-item';
 import {OwnerService} from '../../store/owner.service';
+import {PetEdit} from '../../../model/pet/pet-edit';
 
 @Component({
   selector: 'app-pet-edit',
@@ -21,7 +22,7 @@ export class PetEditComponent implements OnInit {
   birthday: FormControl;
   type: FormControl;
   petTypes: NamedItem[];
-  private id: number;
+  private petId: number;
   private ownerId: number;
 
   // spinner
@@ -46,17 +47,23 @@ export class PetEditComponent implements OnInit {
     });
 
     this.isLoading$ = this.store.pipe(select(fromUi.getIsLoading));
-    const ownerId = this.route.snapshot.params['id'];
-    const petId = this.route.snapshot.params['petId'];
-    this.ownerService.fetchPet(ownerId, petId).subscribe(pet => {
-      this.id = pet.id;
-      this.ownerId = pet.ownerId;
-      this.name.setValue(pet.name);
+    this.ownerId = this.route.snapshot.params['id'];
+    this.petId = this.route.snapshot.params['petId'];
+    this.ownerService.fetchPet(this.ownerId, this.petId).subscribe(pet => {
       this.petTypes = pet.petTypes;
+      this.name.setValue(pet.name);
+      this.birthday.setValue(pet.birthDate);
+      this.type.setValue(pet.type ? pet.type.id : null);
     });
   }
 
   onSubmit() {
-
+    const pet = new PetEdit();
+    pet.id = this.petId;
+    pet.ownerId = this.ownerId;
+    pet.name = this.name.value;
+    pet.birthDate = this.birthday.value;
+    pet.type = this.petTypes.filter(petType => petType.id === this.type.value)[0];
+    console.log(JSON.stringify(pet));
   }
 }

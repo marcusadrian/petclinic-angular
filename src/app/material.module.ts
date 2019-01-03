@@ -1,12 +1,14 @@
 import {NgModule} from '@angular/core';
 import {
   MatButtonModule,
+  MatDatepickerModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatListModule,
+  MatListModule, MatNativeDateModule,
   MatPaginatorModule,
   MatProgressSpinnerModule,
+  MatSelectModule,
   MatSortModule,
   MatTableModule,
   MatToolbarModule
@@ -24,7 +26,10 @@ import {
     MatSortModule,
     MatPaginatorModule,
     MatListModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ],
   exports: [
     MatTableModule,
@@ -36,7 +41,10 @@ import {
     MatSortModule,
     MatPaginatorModule,
     MatListModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule
   ]
 })
 export class MaterialModule {
