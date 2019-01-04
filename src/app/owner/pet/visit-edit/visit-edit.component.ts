@@ -7,6 +7,8 @@ import {AppState} from '../../../app.reducer';
 import {OwnerService} from '../../store/owner.service';
 import * as fromUi from '../../../shared/ui.reducer';
 import {Pet} from '../../../model/pet/pet';
+import {VisitEdit} from '../../../model/visit/visit-edit';
+import {Visit} from '../../../model/visit/visit';
 
 @Component({
   selector: 'app-visit-edit',
@@ -57,6 +59,22 @@ export class VisitEditComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log('todo...');
+    const visit = new VisitEdit();
+    visit.pet = new Pet();
+    visit.pet.id = this.petId;
+    visit.visit = new Visit();
+    visit.visit.date = this.date.value;
+    visit.visit.description = this.description.value;
+
+    if (this.visitId) { // update case : id value exists
+      // this.ownerService.u(pet).subscribe(() => {
+      //   this.router.navigate(['../../../'], {relativeTo: this.route});
+      // });
+    } else { // create case : id value is yet absent
+      this.ownerService.createVisit(this.ownerId, visit).subscribe(() => {
+        this.router.navigate(['../../../../'], {relativeTo: this.route});
+      });
+    }
+
   }
 }

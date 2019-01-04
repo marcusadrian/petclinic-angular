@@ -1,6 +1,28 @@
-<p>
-  visit-edit works!
-</p>
-
 {{ownerName}}
 {{pet | json}}
+
+<form
+  fxLayout="column"
+  fxLayoutAlign="center center"
+  fxLayoutGap="10px"
+  [formGroup]="visitEditForm"
+  (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input matInput [matDatepicker]="datePicker" placeholder="date" [formControl]="date">
+    <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+    <mat-datepicker #datePicker></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input
+      type="text"
+      matInput
+      placeholder="description"
+      [formControl]="description">
+  </mat-form-field>
+  <div>
+    <button [disabled]="isLoading$ | async" type="submit" mat-raised-button color="primary">Submit</button>
+  </div>
+  <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
+</form>
+
+

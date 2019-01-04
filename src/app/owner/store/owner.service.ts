@@ -77,7 +77,7 @@ export class OwnerService {
       );
   }
 
-  fetchVisit(ownerId: number, petId: number, visitId:number): Observable<VisitEdit> {
+  fetchVisit(ownerId: number, petId: number, visitId: number): Observable<VisitEdit> {
     let url: string;
     if (visitId) {
       url = 'http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/' + petId + '/visits/' + visitId;
@@ -126,6 +126,15 @@ export class OwnerService {
     this.store.dispatch(new UI.StartLoading());
     // do rest call
     return this.httpClient.post('http://localhost:8080/my-petclinic/owners/' + pet.ownerId + '/pets/' + pet.id, pet)
+      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+  }
+
+  createVisit(ownerId: number, visit: VisitEdit) {
+    console.log('create visit', JSON.stringify(visit));
+    // start spinner
+    this.store.dispatch(new UI.StartLoading());
+    // do rest call
+    return this.httpClient.put('http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/' + visit.pet.id + '/visits', visit)
       .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 
