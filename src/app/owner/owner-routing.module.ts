@@ -16,6 +16,7 @@ const routes: Routes = [
       {path: ':ownerId/pets/new', component: PetEditComponent},
       {path: ':ownerId/pets/:petId/edit', component: PetEditComponent},
       {path: ':ownerId/pets/:petId/visits/new', component: VisitEditComponent},
+      {path: ':ownerId/pets/:petId/visits/:visitId/edit', component: VisitEditComponent},
     ]
   }
 ];

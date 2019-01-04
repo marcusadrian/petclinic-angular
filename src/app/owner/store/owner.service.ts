@@ -138,6 +138,16 @@ export class OwnerService {
       .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 
+  updateVisit(ownerId: number, visit: VisitEdit) {
+    console.log('update visit', JSON.stringify(visit));
+    // start spinner
+    this.store.dispatch(new UI.StartLoading());
+    // do rest call
+    return this.httpClient.post('http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/' + visit.pet.id + '/visits/' +
+      visit.visit.id, visit)
+      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+  }
+
   resetOwnerSearch() {
     this.store.dispatch(new Owner.SetOwnerSearchRequest(null));
   }

@@ -27,6 +27,7 @@
     </mat-list>
     <div *ngFor="let visit of pet.visits">
       {{visit | json}}
+      <button type="button" mat-raised-button color="primary" (click)="toEditVisit(pet, visit)">Edit Visit</button>
     </div>
     <button type="button" mat-raised-button color="primary" (click)="toEditPet(pet)">Edit Pet</button>
     <button type="button" mat-raised-button color="primary" (click)="toAddVisit(pet)">Add Visit</button>

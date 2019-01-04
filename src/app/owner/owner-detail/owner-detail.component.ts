@@ -7,6 +7,7 @@ import {OwnerService} from '../store/owner.service';
 import {OwnerDetail} from '../../model/owner/owner-detail';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Pet} from '../../model/pet/pet';
+import {Visit} from '../../model/visit/visit';
 
 @Component({
   selector: 'app-owner-detail',
@@ -45,5 +46,9 @@ export class OwnerDetailComponent implements OnInit {
 
   toAddVisit(pet: Pet) {
     this.router.navigate(['pets', pet.id, 'visits', 'new'], {relativeTo: this.route});
+  }
+
+  toEditVisit(pet: Pet, visit: Visit) {
+    this.router.navigate(['pets', pet.id, 'visits', visit.id, 'edit'], {relativeTo: this.route});
   }
 }

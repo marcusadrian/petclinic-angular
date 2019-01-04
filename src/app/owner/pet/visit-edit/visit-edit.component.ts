@@ -63,13 +63,14 @@ export class VisitEditComponent implements OnInit {
     visit.pet = new Pet();
     visit.pet.id = this.petId;
     visit.visit = new Visit();
+    visit.visit.id = this.visitId;
     visit.visit.date = this.date.value;
     visit.visit.description = this.description.value;
 
     if (this.visitId) { // update case : id value exists
-      // this.ownerService.u(pet).subscribe(() => {
-      //   this.router.navigate(['../../../'], {relativeTo: this.route});
-      // });
+      this.ownerService.updateVisit(this.ownerId, visit).subscribe(() => {
+        this.router.navigate(['../../../../../'], {relativeTo: this.route});
+      });
     } else { // create case : id value is yet absent
       this.ownerService.createVisit(this.ownerId, visit).subscribe(() => {
         this.router.navigate(['../../../../'], {relativeTo: this.route});
