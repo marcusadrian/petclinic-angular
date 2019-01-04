@@ -42,4 +42,8 @@ export class OwnerDetailComponent implements OnInit {
   toEditPet(pet: Pet) {
     this.router.navigate(['pets', pet.id, 'edit'], {relativeTo: this.route});
   }
+
+  toAddVisit(pet: Pet) {
+    this.router.navigate(['pets', pet.id, 'visits', 'new'], {relativeTo: this.route});
+  }
 }

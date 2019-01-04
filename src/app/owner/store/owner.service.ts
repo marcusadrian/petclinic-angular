@@ -10,6 +10,7 @@ import {OwnerDetail} from '../../model/owner/owner-detail';
 import {finalize, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {PetEdit} from '../../model/pet/pet-edit';
+import {VisitEdit} from '../../model/visit/visit-edit';
 
 @Injectable()
 export class OwnerService {
@@ -61,7 +62,6 @@ export class OwnerService {
   }
 
   fetchPet(ownerId: number, petId: number): Observable<PetEdit> {
-    // console.log('fetching pet ' + id + '[=id]');
     let url: string;
     if (petId) {
       url = 'http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/' + petId;
@@ -72,6 +72,22 @@ export class OwnerService {
     this.store.dispatch(new UI.StartLoading());
     // do rest call
     return this.httpClient.get<PetEdit>(url)
+      .pipe(
+        finalize(() => this.store.dispatch(new UI.StopLoading()))
+      );
+  }
+
+  fetchVisit(ownerId: number, petId: number, visitId:number): Observable<VisitEdit> {
+    let url: string;
+    if (visitId) {
+      url = 'http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/' + petId + '/visits/' + visitId;
+    } else {
+      url = 'http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/' + petId + '/visits/new';
+    }
+    // start spinner
+    this.store.dispatch(new UI.StartLoading());
+    // do rest call
+    return this.httpClient.get<VisitEdit>(url)
       .pipe(
         finalize(() => this.store.dispatch(new UI.StopLoading()))
       );

@@ -6,13 +6,15 @@ import {OwnerSearchComponent} from './owner-search/owner-search.component';
 import {SharedModule} from '../shared/shared.module';
 import { OwnerEditComponent } from './owner-edit/owner-edit.component';
 import { PetEditComponent } from './pet/pet-edit/pet-edit.component';
+import { VisitEditComponent } from './pet/visit-edit/visit-edit.component';
 
 @NgModule({
   declarations: [
     OwnerDetailComponent,
     OwnerSearchComponent,
     OwnerEditComponent,
-    PetEditComponent
+    PetEditComponent,
+    VisitEditComponent
   ],
   imports: [
     SharedModule,
