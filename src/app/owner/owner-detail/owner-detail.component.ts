@@ -18,6 +18,7 @@ export class OwnerDetailComponent implements OnInit {
 
   isLoading$: Observable<boolean>;
   owner: OwnerDetail;
+  displayedColumns: string[] = ['date', 'description', 'edit'];
 
   constructor(
     private route: ActivatedRoute,
@@ -50,5 +51,9 @@ export class OwnerDetailComponent implements OnInit {
 
   toEditVisit(pet: Pet, visit: Visit) {
     this.router.navigate(['pets', pet.id, 'visits', visit.id, 'edit'], {relativeTo: this.route});
+  }
+
+  hasVisits(pet: Pet) {
+    return pet.visits.length > 0;
   }
 }

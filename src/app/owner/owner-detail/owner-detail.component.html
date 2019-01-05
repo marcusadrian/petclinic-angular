@@ -20,15 +20,41 @@
   </p>
 
   <div *ngFor="let pet of owner.pets">
-    <mat-list>
-      <mat-list-item>Name : {{pet.name}}</mat-list-item>
-      <mat-list-item>Birth Date : {{pet.birthDate}}</mat-list-item>
-      <mat-list-item>Type : {{pet.type}}</mat-list-item>
-    </mat-list>
-    <div *ngFor="let visit of pet.visits">
-      {{visit | json}}
-      <button type="button" mat-raised-button color="primary" (click)="toEditVisit(pet, visit)">Edit Visit</button>
-    </div>
+    <mat-card class="pet-card">
+      <mat-card-header>
+        <div mat-card-avatar [ngClass]="'pet-avatar pet-avatar-' + pet.type"></div>
+        <mat-card-title>{{pet.name}}</mat-card-title>
+        <mat-card-subtitle>{{pet.type}}</mat-card-subtitle>
+        <mat-card-subtitle>{{pet.birthDate}}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p *ngIf="!hasVisits(pet)">No visits yet.</p>
+        <table *ngIf="hasVisits(pet)" mat-table [dataSource]="pet.visits" class="mat-elevation-z8">
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef> Date </th>
+            <td mat-cell *matCellDef="let element"> {{element.date}} </td>
+          </ng-container>
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Description </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+          </ng-container>
+          <ng-container matColumnDef="edit">
+            <th mat-header-cell *matHeaderCellDef>Edit</th>
+            <td mat-cell *matCellDef="let element">
+              <a style="cursor: pointer;"  (click)="toEditVisit(pet, element)">
+                <mat-icon>edit</mat-icon>
+              </a>
+            </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </mat-card-content>
+      <mat-card-actions>
+        <button type="button" mat-raised-button color="primary" (click)="toEditPet(pet)">Edit Pet</button>
+        <button mat-button>Delete</button>
+      </mat-card-actions>
+    </mat-card>
     <button type="button" mat-raised-button color="primary" (click)="toEditPet(pet)">Edit Pet</button>
     <button type="button" mat-raised-button color="primary" (click)="toAddVisit(pet)">Add Visit</button>
   </div>
