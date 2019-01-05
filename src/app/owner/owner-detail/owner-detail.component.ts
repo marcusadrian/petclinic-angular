@@ -56,4 +56,10 @@ export class OwnerDetailComponent implements OnInit {
   hasVisits(pet: Pet) {
     return pet.visits.length > 0;
   }
+
+  deleteOwner() {
+    this.ownerService.deleteOwner(this.owner.id).subscribe(() => {
+      this.router.navigate(['..', 'search'], {relativeTo: this.route});
+    });
+  }
 }

@@ -111,6 +111,15 @@ export class OwnerService {
       .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 
+  deleteOwner(ownerId: number) {
+    console.log('delete owner', ownerId);
+    // start spinner
+    this.store.dispatch(new UI.StartLoading());
+    // do rest call
+    return this.httpClient.delete('http://localhost:8080/my-petclinic/owners/' + ownerId)
+      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+  }
+
   createPet(pet: PetEdit) {
     console.log('create pet', JSON.stringify(pet));
     // start spinner
