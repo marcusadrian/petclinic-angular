@@ -54,7 +54,7 @@
       <mat-card-actions>
         <button type="button" mat-raised-button color="primary" (click)="toEditPet(pet)">Edit Pet</button>
         <button type="button" mat-raised-button color="primary" (click)="toAddVisit(pet)">Add Visit</button>
-        <button mat-raised-button>Delete Pet</button>
+        <button mat-raised-button (click)="deletePet(pet)">Delete Pet</button>
       </mat-card-actions>
     </mat-card>
   </div>

@@ -138,6 +138,15 @@ export class OwnerService {
       .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 
+  deletePet(ownerId: number, petId: number) {
+    console.log('delete pet', petId);
+    // start spinner
+    this.store.dispatch(new UI.StartLoading());
+    // do rest call
+    return this.httpClient.delete('http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/' + petId)
+      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+  }
+
   createVisit(ownerId: number, visit: VisitEdit) {
     console.log('create visit', JSON.stringify(visit));
     // start spinner

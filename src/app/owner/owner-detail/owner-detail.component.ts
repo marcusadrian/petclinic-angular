@@ -62,4 +62,11 @@ export class OwnerDetailComponent implements OnInit {
       this.router.navigate(['..', 'search'], {relativeTo: this.route});
     });
   }
+
+  deletePet(pet: Pet) {
+    this.ownerService.deletePet(this.owner.id, pet.id).subscribe(() => {
+      this.ownerService.fetchOwner(this.owner.id)
+        .subscribe((owner: OwnerDetail) => this.owner = owner);
+    });
+  }
 }
