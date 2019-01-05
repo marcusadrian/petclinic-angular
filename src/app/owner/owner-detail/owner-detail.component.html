@@ -29,6 +29,7 @@
         <mat-card-subtitle>{{pet.birthDate}}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
+        <p>Visits</p>
         <p *ngIf="!hasVisits(pet)">No visits yet.</p>
         <table *ngIf="hasVisits(pet)" mat-table [dataSource]="pet.visits" class="mat-elevation-z8">
           <ng-container matColumnDef="date">
@@ -44,6 +45,14 @@
             <td mat-cell *matCellDef="let element">
               <a style="cursor: pointer;"  (click)="toEditVisit(pet, element)">
                 <mat-icon>edit</mat-icon>
+              </a>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="delete">
+            <th mat-header-cell *matHeaderCellDef>Delete</th>
+            <td mat-cell *matCellDef="let element">
+              <a style="cursor: pointer;"  (click)="deleteVisit(pet, element)">
+                <mat-icon>delete</mat-icon>
               </a>
             </td>
           </ng-container>

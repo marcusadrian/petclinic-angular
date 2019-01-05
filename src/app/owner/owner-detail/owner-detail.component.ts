@@ -18,7 +18,7 @@ export class OwnerDetailComponent implements OnInit {
 
   isLoading$: Observable<boolean>;
   owner: OwnerDetail;
-  displayedColumns: string[] = ['date', 'description', 'edit'];
+  displayedColumns: string[] = ['date', 'description', 'edit', 'delete'];
 
   constructor(
     private route: ActivatedRoute,
@@ -65,6 +65,13 @@ export class OwnerDetailComponent implements OnInit {
 
   deletePet(pet: Pet) {
     this.ownerService.deletePet(this.owner.id, pet.id).subscribe(() => {
+      this.ownerService.fetchOwner(this.owner.id)
+        .subscribe((owner: OwnerDetail) => this.owner = owner);
+    });
+  }
+
+  deleteVisit(pet: Pet, visit: Visit) {
+    this.ownerService.deleteVisit(this.owner.id, pet.id, visit.id).subscribe(() => {
       this.ownerService.fetchOwner(this.owner.id)
         .subscribe((owner: OwnerDetail) => this.owner = owner);
     });

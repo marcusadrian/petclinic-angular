@@ -166,6 +166,16 @@ export class OwnerService {
       .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 
+  deleteVisit(ownerId: number, petId: number, visitId: number) {
+    console.log('delete visit', visitId);
+    // start spinner
+    this.store.dispatch(new UI.StartLoading());
+    // do rest call
+    return this.httpClient.delete('http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/' + petId + '/visits/' +
+      visitId)
+      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+  }
+
   resetOwnerSearch() {
     this.store.dispatch(new Owner.SetOwnerSearchRequest(null));
   }
@@ -181,4 +191,5 @@ export class OwnerService {
       .forEach(key => cleanedUpParams = cleanedUpParams.set(key, params.get(key)));
     return cleanedUpParams;
   }
+
 }
