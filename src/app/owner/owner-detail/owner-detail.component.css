@@ -5,24 +5,31 @@
 .pet-avatar-bird {
   background-image: url('/assets/img/pet/bird.png');
 }
+
 .pet-avatar-cat {
   background-image: url('/assets/img/pet/cat.png');
 }
+
 .pet-avatar-dog {
   background-image: url('/assets/img/pet/dog.png');
 }
+
 .pet-avatar-hamster {
   background-image: url('/assets/img/pet/hamster.png');
 }
+
 .pet-avatar-lizard {
   background-image: url('/assets/img/pet/lizard.png');
 }
+
 .pet-avatar-snake {
   background-image: url('/assets/img/pet/snake.png');
 }
 
 .pet-card {
   max-width: 400px;
+  margin-bottom: 20px;
+  background-color: lightgreen;
 }
 
 table {

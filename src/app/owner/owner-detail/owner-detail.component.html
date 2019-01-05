@@ -20,7 +20,7 @@
   </p>
 
   <div *ngFor="let pet of owner.pets">
-    <mat-card class="pet-card">
+    <mat-card class="pet-card mat-elevation-z8">
       <mat-card-header>
         <div mat-card-avatar [ngClass]="'pet-avatar pet-avatar-' + pet.type"></div>
         <mat-card-title>{{pet.name}}</mat-card-title>
@@ -52,11 +52,10 @@
       </mat-card-content>
       <mat-card-actions>
         <button type="button" mat-raised-button color="primary" (click)="toEditPet(pet)">Edit Pet</button>
-        <button mat-button>Delete</button>
+        <button type="button" mat-raised-button color="primary" (click)="toAddVisit(pet)">Add Visit</button>
+        <button mat-raised-button>Delete Pet</button>
       </mat-card-actions>
     </mat-card>
-    <button type="button" mat-raised-button color="primary" (click)="toEditPet(pet)">Edit Pet</button>
-    <button type="button" mat-raised-button color="primary" (click)="toAddVisit(pet)">Add Visit</button>
   </div>
 
 </div>
