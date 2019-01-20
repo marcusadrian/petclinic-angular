@@ -28,4 +28,4 @@
   </div>
   <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
 </form>
-{{petTypes | json}}
+{{backEndValidation.errorResponse | json}}
