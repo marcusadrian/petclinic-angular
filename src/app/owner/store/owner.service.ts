@@ -11,6 +11,7 @@ import {finalize, tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {PetEdit} from '../../model/pet/pet-edit';
 import {VisitEdit} from '../../model/visit/visit-edit';
+import {PetClinicUrls} from '../../shared/PetClinicUrls';
 
 @Injectable()
 export class OwnerService {
@@ -40,7 +41,7 @@ export class OwnerService {
     // start spinner
     this.store.dispatch(new UI.StartLoading());
     // do rest call
-    return this.httpClient.get<OwnerSearchResponse>('http://localhost:8080/my-petclinic/owners/search', {params: params})
+    return this.httpClient.get<OwnerSearchResponse>(PetClinicUrls.ownerSearchPath(), {params: params})
       .pipe(
         tap(() => {
           this.store.dispatch(new Owner.SetOwnerSearchRequest(request));
@@ -55,7 +56,7 @@ export class OwnerService {
     // start spinner
     this.store.dispatch(new UI.StartLoading());
     // do rest call
-    return this.httpClient.get<OwnerDetail>('http://localhost:8080/my-petclinic/owners/' + id)
+    return this.httpClient.get<OwnerDetail>(PetClinicUrls.ownerPath(id))
       .pipe(
         finalize(() => this.store.dispatch(new UI.StopLoading()))
       );
@@ -64,9 +65,9 @@ export class OwnerService {
   fetchPet(ownerId: number, petId: number): Observable<PetEdit> {
     let url: string;
     if (petId) {
-      url = 'http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/' + petId;
+      url = PetClinicUrls.petPath(ownerId, petId);
     } else {
-      url = 'http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/new';
+      url = PetClinicUrls.newPetPath(ownerId);
     }
     // start spinner
     this.store.dispatch(new UI.StartLoading());
@@ -80,9 +81,9 @@ export class OwnerService {
   fetchVisit(ownerId: number, petId: number, visitId: number): Observable<VisitEdit> {
     let url: string;
     if (visitId) {
-      url = 'http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/' + petId + '/visits/' + visitId;
+      url = PetClinicUrls.visitPath(ownerId, petId, visitId);
     } else {
-      url = 'http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/' + petId + '/visits/new';
+      url = PetClinicUrls.newVisitPath(ownerId, petId);
     }
     // start spinner
     this.store.dispatch(new UI.StartLoading());
@@ -98,7 +99,7 @@ export class OwnerService {
     // start spinner
     this.store.dispatch(new UI.StartLoading());
     // do rest call
-    return this.httpClient.put<OwnerDetail>('http://localhost:8080/my-petclinic/owners', owner)
+    return this.httpClient.put<OwnerDetail>(PetClinicUrls.ownersPath(), owner)
       .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 
@@ -107,7 +108,7 @@ export class OwnerService {
     // start spinner
     this.store.dispatch(new UI.StartLoading());
     // do rest call
-    return this.httpClient.post('http://localhost:8080/my-petclinic/owners/' + owner.id, owner)
+    return this.httpClient.post(PetClinicUrls.ownerPath(owner.id), owner)
       .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 
@@ -116,7 +117,7 @@ export class OwnerService {
     // start spinner
     this.store.dispatch(new UI.StartLoading());
     // do rest call
-    return this.httpClient.delete('http://localhost:8080/my-petclinic/owners/' + ownerId)
+    return this.httpClient.delete(PetClinicUrls.ownerPath(ownerId))
       .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 
@@ -125,7 +126,7 @@ export class OwnerService {
     // start spinner
     this.store.dispatch(new UI.StartLoading());
     // do rest call
-    return this.httpClient.put('http://localhost:8080/my-petclinic/owners/' + pet.ownerId + '/pets', pet)
+    return this.httpClient.put(PetClinicUrls.petsPath(pet.ownerId), pet)
       .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 
@@ -134,7 +135,7 @@ export class OwnerService {
     // start spinner
     this.store.dispatch(new UI.StartLoading());
     // do rest call
-    return this.httpClient.post('http://localhost:8080/my-petclinic/owners/' + pet.ownerId + '/pets/' + pet.id, pet)
+    return this.httpClient.post(PetClinicUrls.petPath(pet.ownerId, pet.id), pet)
       .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 
@@ -143,7 +144,7 @@ export class OwnerService {
     // start spinner
     this.store.dispatch(new UI.StartLoading());
     // do rest call
-    return this.httpClient.delete('http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/' + petId)
+    return this.httpClient.delete(PetClinicUrls.petPath(ownerId, petId))
       .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 
@@ -152,7 +153,7 @@ export class OwnerService {
     // start spinner
     this.store.dispatch(new UI.StartLoading());
     // do rest call
-    return this.httpClient.put('http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/' + visit.pet.id + '/visits', visit)
+    return this.httpClient.put(PetClinicUrls.visitsPath(ownerId, visit.pet.id), visit)
       .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 
@@ -161,8 +162,7 @@ export class OwnerService {
     // start spinner
     this.store.dispatch(new UI.StartLoading());
     // do rest call
-    return this.httpClient.post('http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/' + visit.pet.id + '/visits/' +
-      visit.visit.id, visit)
+    return this.httpClient.post(PetClinicUrls.visitPath(ownerId, visit.pet.id, visit.visit.id), visit)
       .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 
@@ -171,8 +171,7 @@ export class OwnerService {
     // start spinner
     this.store.dispatch(new UI.StartLoading());
     // do rest call
-    return this.httpClient.delete('http://localhost:8080/my-petclinic/owners/' + ownerId + '/pets/' + petId + '/visits/' +
-      visitId)
+    return this.httpClient.delete(PetClinicUrls.visitPath(ownerId, petId, visitId))
       .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
   }
 
