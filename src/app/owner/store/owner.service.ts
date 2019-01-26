@@ -3,11 +3,10 @@ import {HttpClient, HttpParams} from '@angular/common/http';
 import {OwnerSearchResponse} from '../../model/owner/owner-search-response';
 import {Store} from '@ngrx/store';
 import {AppState} from '../../app.reducer';
-import * as UI from '../../shared/ui.actions';
 import * as Owner from '../../owner/store/owner.actions';
 import {OwnerSearchRequest} from '../owner-search/owner-search-request';
 import {OwnerDetail} from '../../model/owner/owner-detail';
-import {finalize, tap} from 'rxjs/operators';
+import {tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {PetEdit} from '../../model/pet/pet-edit';
 import {VisitEdit} from '../../model/visit/visit-edit';
@@ -38,28 +37,18 @@ export class OwnerService {
         .set('sort', pageRequest.sortBy.toString() + ',' + pageRequest.sortDirection);
     }
     params = this.cleanUpHttpParams(params);
-    // start spinner
-    this.store.dispatch(new UI.StartLoading());
-    // do rest call
     return this.httpClient.get<OwnerSearchResponse>(PetClinicUrls.ownerSearchPath(), {params: params})
       .pipe(
         tap(() => {
           this.store.dispatch(new Owner.SetOwnerSearchRequest(request));
-        }),
-        finalize(() => this.store.dispatch(new UI.StopLoading()))
+        })
       );
 
   }
 
   fetchOwner(id: number): Observable<OwnerDetail> {
     console.log('fetching owner ' + id + '[=id]');
-    // start spinner
-    this.store.dispatch(new UI.StartLoading());
-    // do rest call
-    return this.httpClient.get<OwnerDetail>(PetClinicUrls.ownerPath(id))
-      .pipe(
-        finalize(() => this.store.dispatch(new UI.StopLoading()))
-      );
+    return this.httpClient.get<OwnerDetail>(PetClinicUrls.ownerPath(id));
   }
 
   fetchPet(ownerId: number, petId: number): Observable<PetEdit> {
@@ -69,13 +58,7 @@ export class OwnerService {
     } else {
       url = PetClinicUrls.newPetPath(ownerId);
     }
-    // start spinner
-    this.store.dispatch(new UI.StartLoading());
-    // do rest call
-    return this.httpClient.get<PetEdit>(url)
-      .pipe(
-        finalize(() => this.store.dispatch(new UI.StopLoading()))
-      );
+    return this.httpClient.get<PetEdit>(url);
   }
 
   fetchVisit(ownerId: number, petId: number, visitId: number): Observable<VisitEdit> {
@@ -85,94 +68,52 @@ export class OwnerService {
     } else {
       url = PetClinicUrls.newVisitPath(ownerId, petId);
     }
-    // start spinner
-    this.store.dispatch(new UI.StartLoading());
-    // do rest call
-    return this.httpClient.get<VisitEdit>(url)
-      .pipe(
-        finalize(() => this.store.dispatch(new UI.StopLoading()))
-      );
+    return this.httpClient.get<VisitEdit>(url);
   }
 
   createOwner(owner: OwnerDetail) {
     console.log('create owner ' + JSON.stringify(owner));
-    // start spinner
-    this.store.dispatch(new UI.StartLoading());
-    // do rest call
-    return this.httpClient.put<OwnerDetail>(PetClinicUrls.ownersPath(), owner)
-      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+    return this.httpClient.put<OwnerDetail>(PetClinicUrls.ownersPath(), owner);
   }
 
   updateOwner(owner: OwnerDetail) {
     console.log('update owner ' + JSON.stringify(owner));
-    // start spinner
-    this.store.dispatch(new UI.StartLoading());
-    // do rest call
-    return this.httpClient.post(PetClinicUrls.ownerPath(owner.id), owner)
-      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+    return this.httpClient.post(PetClinicUrls.ownerPath(owner.id), owner);
   }
 
   deleteOwner(ownerId: number) {
     console.log('delete owner', ownerId);
-    // start spinner
-    this.store.dispatch(new UI.StartLoading());
-    // do rest call
-    return this.httpClient.delete(PetClinicUrls.ownerPath(ownerId))
-      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+    return this.httpClient.delete(PetClinicUrls.ownerPath(ownerId));
   }
 
   createPet(pet: PetEdit) {
     console.log('create pet', JSON.stringify(pet));
-    // start spinner
-    this.store.dispatch(new UI.StartLoading());
-    // do rest call
-    return this.httpClient.put(PetClinicUrls.petsPath(pet.ownerId), pet)
-      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+    return this.httpClient.put(PetClinicUrls.petsPath(pet.ownerId), pet);
   }
 
   updatePet(pet: PetEdit) {
     console.log('update pet', JSON.stringify(pet));
-    // start spinner
-    this.store.dispatch(new UI.StartLoading());
-    // do rest call
-    return this.httpClient.post(PetClinicUrls.petPath(pet.ownerId, pet.id), pet)
-      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+    return this.httpClient.post(PetClinicUrls.petPath(pet.ownerId, pet.id), pet);
   }
 
   deletePet(ownerId: number, petId: number) {
     console.log('delete pet', petId);
-    // start spinner
-    this.store.dispatch(new UI.StartLoading());
-    // do rest call
-    return this.httpClient.delete(PetClinicUrls.petPath(ownerId, petId))
-      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+    return this.httpClient.delete(PetClinicUrls.petPath(ownerId, petId));
   }
 
   createVisit(ownerId: number, visit: VisitEdit) {
     console.log('create visit', JSON.stringify(visit));
-    // start spinner
-    this.store.dispatch(new UI.StartLoading());
-    // do rest call
-    return this.httpClient.put(PetClinicUrls.visitsPath(ownerId, visit.pet.id), visit)
-      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+    return this.httpClient.put(PetClinicUrls.visitsPath(ownerId, visit.pet.id), visit);
   }
 
   updateVisit(ownerId: number, visit: VisitEdit) {
     console.log('update visit', JSON.stringify(visit));
-    // start spinner
-    this.store.dispatch(new UI.StartLoading());
-    // do rest call
-    return this.httpClient.post(PetClinicUrls.visitPath(ownerId, visit.pet.id, visit.visit.id), visit)
-      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+    return this.httpClient.post(PetClinicUrls.visitPath(ownerId, visit.pet.id, visit.visit.id), visit);
   }
 
   deleteVisit(ownerId: number, petId: number, visitId: number) {
     console.log('delete visit', visitId);
-    // start spinner
-    this.store.dispatch(new UI.StartLoading());
-    // do rest call
-    return this.httpClient.delete(PetClinicUrls.visitPath(ownerId, petId, visitId))
-      .pipe(finalize(() => this.store.dispatch(new UI.StopLoading())));
+    return this.httpClient.delete(PetClinicUrls.visitPath(ownerId, petId, visitId));
   }
 
   resetOwnerSearch() {

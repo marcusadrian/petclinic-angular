@@ -11,6 +11,8 @@ import {reducers} from './app.reducer';
 import {OwnerModule} from './owner/owner.module';
 import {HeaderComponent} from './header/header.component';
 import {SharedModule} from './shared/shared.module';
+import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import {LoadingInterceptor} from './shared/loading.interceptor';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,12 @@ import {SharedModule} from './shared/shared.module';
     OwnerModule,
     StoreModule.forRoot(reducers)
   ],
-  providers: [OwnerService],
+  providers: [OwnerService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoadingInterceptor,
+      multi: true
+    }],
   bootstrap: [AppComponent]
 })
 export class AppModule {
