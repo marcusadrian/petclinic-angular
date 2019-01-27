@@ -11,6 +11,7 @@ import {Observable} from 'rxjs';
 import {PetEdit} from '../../model/pet/pet-edit';
 import {VisitEdit} from '../../model/visit/visit-edit';
 import {PetClinicUrls} from '../../shared/PetClinicUrls';
+import {OwnerEdit} from '../../model/owner/owner-edit';
 
 @Injectable()
 export class OwnerService {
@@ -49,6 +50,11 @@ export class OwnerService {
   fetchOwner(id: number): Observable<OwnerDetail> {
     console.log('fetching owner ' + id + '[=id]');
     return this.httpClient.get<OwnerDetail>(PetClinicUrls.ownerPath(id));
+  }
+
+  fetchOwnerEdit(id: number): Observable<OwnerEdit> {
+    console.log('fetching owner edit' + id + '[=id]');
+    return this.httpClient.get<OwnerEdit>(PetClinicUrls.ownerEditPath(id));
   }
 
   fetchPet(ownerId: number, petId: number): Observable<PetEdit> {

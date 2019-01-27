@@ -7,6 +7,7 @@ import {AppState} from '../../app.reducer';
 import {OwnerDetail} from '../../model/owner/owner-detail';
 import {OwnerService} from '../store/owner.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {OwnerEdit} from '../../model/owner/owner-edit';
 
 @Component({
   selector: 'app-owner-edit',
@@ -50,14 +51,14 @@ export class OwnerEditComponent implements OnInit {
     });
 
     this.isLoading$ = this.store.pipe(select(fromUi.getIsLoading));
-    const id = this.route.snapshot.params['ownerId'];
-    if (id) { // update case
-      this.ownerService.fetchOwner(this.route.snapshot.params['ownerId']).subscribe(
-        (owner: OwnerDetail) => {
+    this.ownerId = this.route.snapshot.params['ownerId'];
+
+    if (this.ownerId) { // update case
+      this.ownerService.fetchOwnerEdit(this.route.snapshot.params['ownerId']).subscribe(
+        (owner: OwnerEdit) => {
           if (!owner) {
             return;
           }
-          this.ownerId = owner.id;
           this.firstName.setValue(owner.firstName);
           this.lastName.setValue(owner.lastName);
           this.address.setValue(owner.address);

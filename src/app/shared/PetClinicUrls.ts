@@ -14,6 +14,10 @@ export class PetClinicUrls {
     return `${PetClinicUrls.ownersPath()}/${id}`;
   }
 
+  static ownerEditPath(id: number): string {
+    return `${PetClinicUrls.ownerPath(id)}/edit`;
+  }
+
   static petsPath(ownerId: number): string {
     return `${PetClinicUrls.ownerPath(ownerId)}/pets`;
   }
