@@ -53,7 +53,7 @@ export class PetEditComponent implements OnInit {
     this.isLoading$ = this.store.pipe(select(fromUi.getIsLoading));
     this.ownerId = this.route.snapshot.params['ownerId'];
     this.petId = this.route.snapshot.params['petId'];
-    this.ownerService.fetchPet(this.ownerId, this.petId).subscribe(pet => {
+    this.ownerService.fetchPetEdit(this.ownerId, this.petId).subscribe(pet => {
       this.petTypes = pet.petTypes;
       this.name.setValue(pet.name);
       this.birthday.setValue(pet.birthDate);

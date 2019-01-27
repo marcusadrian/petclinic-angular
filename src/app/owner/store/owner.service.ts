@@ -39,7 +39,7 @@ export class OwnerService {
         .set('sort', pageRequest.sortBy.toString() + ',' + pageRequest.sortDirection);
     }
     params = this.cleanUpHttpParams(params);
-    return this.httpClient.get<OwnerSearchResponse>(PetClinicUrls.ownerSearchPath(), {params: params})
+    return this.httpClient.get<OwnerSearchResponse>(PetClinicUrls.searchOwnersPath(), {params: params})
       .pipe(
         tap(() => {
           this.store.dispatch(new Owner.SetOwnerSearchRequest(request));
@@ -55,34 +55,36 @@ export class OwnerService {
 
   fetchOwnerEdit(id: number): Observable<OwnerEdit> {
     console.log('fetching owner edit' + id + '[=id]');
-    return this.httpClient.get<OwnerEdit>(PetClinicUrls.ownerEditPath(id));
+    return this.httpClient.get<OwnerEdit>(PetClinicUrls.editOwnerPath(id));
   }
 
-  fetchPet(ownerId: number, petId: number): Observable<PetEdit> {
+  fetchPetEdit(ownerId: number, petId: number): Observable<PetEdit> {
     let url: string;
     if (petId) {
-      url = PetClinicUrls.petPath(ownerId, petId);
+      url = PetClinicUrls.editPetPath(ownerId, petId);
     } else {
       url = PetClinicUrls.newPetPath(ownerId);
     }
     return this.httpClient.get<PetEdit>(url);
   }
 
-  fetchVisit(ownerId: number, petId: number, visitId: number): Observable<VisitEdit> {
+  fetchVisitEdit(ownerId: number, petId: number, visitId: number): Observable<VisitEdit> {
     let url: string;
     if (visitId) {
-      url = PetClinicUrls.visitPath(ownerId, petId, visitId);
+      url = PetClinicUrls.editVisitPath(ownerId, petId, visitId);
     } else {
       url = PetClinicUrls.newVisitPath(ownerId, petId);
     }
     return this.httpClient.get<VisitEdit>(url);
   }
 
+  // TODO doit prendre OwnerEdit
   createOwner(owner: OwnerDetail) {
     console.log('create owner ' + JSON.stringify(owner));
     return this.httpClient.put<Item>(PetClinicUrls.ownersPath(), owner);
   }
 
+  // TODO doit prendre OwnerEdit
   updateOwner(owner: OwnerDetail) {
     console.log('update owner ' + JSON.stringify(owner));
     return this.httpClient.post(PetClinicUrls.ownerPath(owner.id), owner);

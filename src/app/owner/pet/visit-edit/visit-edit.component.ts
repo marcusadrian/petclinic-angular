@@ -46,7 +46,7 @@ export class VisitEditComponent implements OnInit {
     this.ownerId = this.route.snapshot.params['ownerId'];
     this.petId = this.route.snapshot.params['petId'];
     this.visitId = this.route.snapshot.params['visitId'];
-    this.ownerService.fetchVisit(this.ownerId, this.petId, this.visitId).subscribe(dto => {
+    this.ownerService.fetchVisitEdit(this.ownerId, this.petId, this.visitId).subscribe(dto => {
       this.date.setValue(dto.date);
       this.description.setValue(dto.description);
     });
