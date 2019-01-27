@@ -1,4 +1,6 @@
-export interface NamedItem {
-  id: number;
+import {Item} from './item';
+
+export interface NamedItem extends Item {
+
   name: string;
 }
