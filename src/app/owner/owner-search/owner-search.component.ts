@@ -144,11 +144,10 @@ export class OwnerSearchComponent implements OnInit {
       .build();
     console.log(JSON.stringify(this.ownerSearchRequest));
     this.ownerService.fetchOwners(this.ownerSearchRequest).subscribe((resp: OwnerSearchResponse) => {
-      this.dataSource = resp._embedded ? resp._embedded.owners : [];
-      const page = resp.page;
-      this.paginator.pageSize = page.size;
-      this.paginator.length = page.totalElements;
-      this.paginator.pageIndex = page.number;
+      this.dataSource = resp.content;
+      this.paginator.pageSize = resp.size;
+      this.paginator.length = resp.totalElements;
+      this.paginator.pageIndex = resp.number;
     });
   }
 

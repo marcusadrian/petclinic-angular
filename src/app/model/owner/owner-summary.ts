@@ -1,5 +1,3 @@
-import {OwnerSummaryLinks} from './owner-summary-links';
-
 export interface OwnerSummary {
 
   id: number;
@@ -8,7 +6,6 @@ export interface OwnerSummary {
   city: string;
   telephone: string;
   petNames: string;
-  _links: OwnerSummaryLinks;
 
 }
 

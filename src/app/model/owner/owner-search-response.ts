@@ -1,11 +1,10 @@
 import {OwnerSummary} from './owner-summary';
-import {Page} from '../rest/Page';
 
 export interface OwnerSearchResponse {
-  _embedded?: Owners;
-  page?: Page;
-}
+  content?: OwnerSummary[];
+  size: number;
+  totalElements: number;
+  totalPages: number;
+  number: number;
 
-export interface Owners {
-  owners: OwnerSummary[];
 }
