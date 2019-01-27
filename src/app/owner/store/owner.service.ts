@@ -12,6 +12,7 @@ import {PetEdit} from '../../model/pet/pet-edit';
 import {VisitEdit} from '../../model/visit/visit-edit';
 import {PetClinicUrls} from '../../shared/PetClinicUrls';
 import {OwnerEdit} from '../../model/owner/owner-edit';
+import {Item} from '../../model/general/item';
 
 @Injectable()
 export class OwnerService {
@@ -79,7 +80,7 @@ export class OwnerService {
 
   createOwner(owner: OwnerDetail) {
     console.log('create owner ' + JSON.stringify(owner));
-    return this.httpClient.put<OwnerDetail>(PetClinicUrls.ownersPath(), owner);
+    return this.httpClient.put<Item>(PetClinicUrls.ownersPath(), owner);
   }
 
   updateOwner(owner: OwnerDetail) {
