@@ -78,16 +78,14 @@ export class OwnerService {
     return this.httpClient.get<VisitEdit>(url);
   }
 
-  // TODO doit prendre OwnerEdit
-  createOwner(owner: OwnerDetail) {
+  createOwner(owner: OwnerEdit) {
     console.log('create owner ' + JSON.stringify(owner));
     return this.httpClient.put<Item>(PetClinicUrls.ownersPath(), owner);
   }
 
-  // TODO doit prendre OwnerEdit
-  updateOwner(owner: OwnerDetail) {
+  updateOwner(ownerId: number, owner: OwnerEdit) {
     console.log('update owner ' + JSON.stringify(owner));
-    return this.httpClient.post(PetClinicUrls.ownerPath(owner.id), owner);
+    return this.httpClient.post(PetClinicUrls.ownerPath(ownerId), owner);
   }
 
   deleteOwner(ownerId: number) {

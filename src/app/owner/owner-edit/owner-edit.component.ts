@@ -4,7 +4,6 @@ import {Observable} from 'rxjs';
 import {select, Store} from '@ngrx/store';
 import * as fromUi from '../../shared/ui.reducer';
 import {AppState} from '../../app.reducer';
-import {OwnerDetail} from '../../model/owner/owner-detail';
 import {OwnerService} from '../store/owner.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {OwnerEdit} from '../../model/owner/owner-edit';
@@ -70,8 +69,7 @@ export class OwnerEditComponent implements OnInit {
   }
 
   onSubmit() {
-    const owner = new OwnerDetail({
-      id: this.ownerId,
+    const owner = new OwnerEdit({
       firstName: this.firstName.value,
       lastName: this.lastName.value,
       address: this.address.value,
@@ -79,7 +77,7 @@ export class OwnerEditComponent implements OnInit {
       telephone: this.telephone.value
     });
     if (this.ownerId) { // update case : id value exists
-      this.ownerService.updateOwner(owner).subscribe(value => {
+      this.ownerService.updateOwner(this.ownerId, owner).subscribe(value => {
         this.router.navigate(['../'], {relativeTo: this.route});
       });
     } else { // create case : id value is yet absent
