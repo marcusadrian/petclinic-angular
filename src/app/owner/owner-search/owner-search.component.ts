@@ -71,7 +71,7 @@ export class OwnerSearchComponent implements OnInit {
     this.store.pipe(select(fromOwner.getOwnerSearchRequest), take(1)).subscribe(
       (ownerSearchRequest: OwnerSearchRequest) => {
         console.log('loading from store : ' + JSON.stringify(ownerSearchRequest));
-        if (ownerSearchRequest) { // initialisation at the very first time or after resetting
+        if (ownerSearchRequest) {
           this.ownerSearchRequest = ownerSearchRequest;
           const pageRequest = this.ownerSearchRequest.pageRequest;
           this.paginator.pageSize = pageRequest.size;
