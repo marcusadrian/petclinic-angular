@@ -1,11 +1,11 @@
 import {Visit} from '../visit/visit';
 
-export class Pet {
+export interface Pet {
 
-  public id: number;
-  public name: string;
-  public birthDate: Date;
-  public type: string;
-  public visits: Visit[];
+  id: number;
+  name: string;
+  birthDate: Date;
+  type: string;
+  visits: Visit[];
 
 }

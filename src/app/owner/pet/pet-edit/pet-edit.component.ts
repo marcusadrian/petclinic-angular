@@ -63,20 +63,18 @@ export class PetEditComponent implements OnInit {
 
   onSubmit() {
     const pet = new PetEdit();
-    pet.id = this.petId;
-    pet.ownerId = this.ownerId;
     pet.name = this.name.value;
     pet.birthDate = this.birthday.value;
     pet.type = this.petTypes.filter(petType => petType.id === this.type.value)[0];
 
     if (this.petId) { // update case : id value exists
-      this.ownerService.updatePet(pet).subscribe(() => {
+      this.ownerService.updatePet(this.ownerId, this.petId, pet).subscribe(() => {
         this.router.navigate(['../../../'], {relativeTo: this.route});
       }, (errResp: HttpErrorResponse) => {
         this.backEndValidation.registerHttpErrorResponse(errResp);
       });
     } else { // create case : id value is yet absent
-      this.ownerService.createPet(pet).subscribe(() => {
+      this.ownerService.createPet(this.ownerId, pet).subscribe(() => {
         this.router.navigate(['../../'], {relativeTo: this.route});
       });
     }

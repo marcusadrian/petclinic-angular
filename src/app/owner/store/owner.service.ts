@@ -93,14 +93,15 @@ export class OwnerService {
     return this.httpClient.delete(PetClinicUrls.ownerPath(ownerId));
   }
 
-  createPet(pet: PetEdit) {
+  createPet(ownerId: number, pet: PetEdit) {
     console.log('create pet', JSON.stringify(pet));
-    return this.httpClient.put(PetClinicUrls.petsPath(pet.ownerId), pet);
+    return this.httpClient.put(PetClinicUrls.petsPath(ownerId), pet);
   }
 
-  updatePet(pet: PetEdit) {
+  updatePet(ownerId: number, petId: number, pet: PetEdit) {
+    // TODO repasser sur les logs
     console.log('update pet', JSON.stringify(pet));
-    return this.httpClient.post(PetClinicUrls.petPath(pet.ownerId, pet.id), pet);
+    return this.httpClient.post(PetClinicUrls.petPath(ownerId, petId), pet);
   }
 
   deletePet(ownerId: number, petId: number) {
