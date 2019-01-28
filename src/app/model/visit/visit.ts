@@ -1,6 +1,7 @@
-export class Visit {
-  public id: number;
-  public date: Date;
-  public description: string;
+export interface Visit {
+
+  id: number;
+  date: Date;
+  description: string;
 
 }
