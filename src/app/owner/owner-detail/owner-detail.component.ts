@@ -33,11 +33,11 @@ export class OwnerDetailComponent implements OnInit {
       .subscribe((owner: OwnerDetail) => this.owner = owner);
   }
 
-  toOwnerEdit() {
+  toEditOwner() {
     this.router.navigate(['edit'], {relativeTo: this.route});
   }
 
-  toAddNewPet() {
+  toAddPet() {
     this.router.navigate(['pets', 'new'], {relativeTo: this.route});
   }
 

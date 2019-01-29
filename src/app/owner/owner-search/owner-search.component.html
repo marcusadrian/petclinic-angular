@@ -56,7 +56,7 @@
     <div>
       <button [disabled]="isLoading$ | async" type="submit" mat-raised-button color="primary">Submit</button>
       <button [disabled]="isLoading$ | async" type="reset" (click)="onReset()" mat-raised-button>Reset</button>
-      <button [disabled]="isLoading$ | async" type="button" (click)="onAskForAddOwner()" mat-raised-button>Add Owner</button>
+      <button [disabled]="isLoading$ | async" type="button" (click)="toAddOwner()" mat-raised-button>Add Owner</button>
     </div>
     <mat-spinner *ngIf="isLoading$ | async"></mat-spinner>
   </form>

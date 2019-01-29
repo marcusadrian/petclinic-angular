@@ -194,8 +194,7 @@ export class OwnerSearchComponent implements OnInit {
     this.sort.direction = 'asc';
   }
 
-  onAskForAddOwner() {
-    console.log('onAskForAddOwner');
+  toAddOwner() {
     this.router.navigate(['../new'], {relativeTo: this.route});
   }
 }
