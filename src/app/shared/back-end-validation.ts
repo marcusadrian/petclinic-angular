@@ -39,7 +39,6 @@ export class BackEndValidation {
   }
 
   validate(control: AbstractControl): { [s: string]: boolean } {
-    console.log('control est :', control);
     if (this.errorResponse && this.errorResponse.errors) {
       for (const err of this.errorResponse.errors) {
         const c = this.form.get(err.propertyPath);

@@ -49,16 +49,17 @@ export class OwnerService {
   }
 
   fetchOwner(id: number): Observable<OwnerDetail> {
-    console.log('fetching owner ' + id + '[=id]');
+    console.log('fetching owner', id, '[=id]');
     return this.httpClient.get<OwnerDetail>(PetClinicUrls.ownerPath(id));
   }
 
   fetchOwnerEdit(id: number): Observable<OwnerEdit> {
-    console.log('fetching owner edit' + id + '[=id]');
+    console.log('fetching owner edit', id, '[=id]');
     return this.httpClient.get<OwnerEdit>(PetClinicUrls.editOwnerPath(id));
   }
 
   fetchPetEdit(ownerId: number, petId: number): Observable<PetEdit> {
+    console.log('fetching pet edit', ownerId, '[=ownerId]', petId, '[=petId]');
     let url: string;
     if (petId) {
       url = PetClinicUrls.editPetPath(ownerId, petId);
@@ -69,6 +70,7 @@ export class OwnerService {
   }
 
   fetchVisitEdit(ownerId: number, petId: number, visitId: number): Observable<VisitEdit> {
+    console.log('fetching visit edit', ownerId, '[=ownerId]', petId, '[=petId]', visitId, '[=visitId]');
     let url: string;
     if (visitId) {
       url = PetClinicUrls.editVisitPath(ownerId, petId, visitId);
@@ -79,48 +81,47 @@ export class OwnerService {
   }
 
   createOwner(owner: OwnerEdit) {
-    console.log('create owner ' + JSON.stringify(owner));
+    console.log('create owner', JSON.stringify(owner));
     return this.httpClient.put<Item>(PetClinicUrls.ownersPath(), owner);
   }
 
   updateOwner(ownerId: number, owner: OwnerEdit) {
-    console.log('update owner ' + JSON.stringify(owner));
+    console.log('update owner', ownerId, '[=ownerId]', JSON.stringify(owner));
     return this.httpClient.post(PetClinicUrls.ownerPath(ownerId), owner);
   }
 
   deleteOwner(ownerId: number) {
-    console.log('delete owner', ownerId);
+    console.log('delete owner', ownerId, '[=ownerId]');
     return this.httpClient.delete(PetClinicUrls.ownerPath(ownerId));
   }
 
   createPet(ownerId: number, pet: PetEdit) {
-    console.log('create pet', JSON.stringify(pet));
+    console.log('create pet', ownerId, '[=ownerId]', JSON.stringify(pet));
     return this.httpClient.put(PetClinicUrls.petsPath(ownerId), pet);
   }
 
   updatePet(ownerId: number, petId: number, pet: PetEdit) {
-    // TODO repasser sur les logs
-    console.log('update pet', JSON.stringify(pet));
+    console.log('update pet', ownerId, '[=ownerId]', petId, '[=petId]', JSON.stringify(pet));
     return this.httpClient.post(PetClinicUrls.petPath(ownerId, petId), pet);
   }
 
   deletePet(ownerId: number, petId: number) {
-    console.log('delete pet', petId);
+    console.log('delete pet', ownerId, '[=ownerId]', petId, '[=petId]');
     return this.httpClient.delete(PetClinicUrls.petPath(ownerId, petId));
   }
 
   createVisit(ownerId: number, petId: number, visit: VisitEdit) {
-    console.log('create visit', JSON.stringify(visit));
+    console.log('create visit', ownerId, '[=ownerId]', petId, '[=petId]', JSON.stringify(visit));
     return this.httpClient.put(PetClinicUrls.visitsPath(ownerId, petId), visit);
   }
 
   updateVisit(ownerId: number, petId: number, visitId: number, visit: VisitEdit) {
-    console.log('update visit', JSON.stringify(visit));
+    console.log('update visit', ownerId, '[=ownerId]', petId, '[=petId]', visitId, '[=visitId]', JSON.stringify(visit));
     return this.httpClient.post(PetClinicUrls.visitPath(ownerId, petId, visitId), visit);
   }
 
   deleteVisit(ownerId: number, petId: number, visitId: number) {
-    console.log('delete visit', visitId);
+    console.log('delete visit', ownerId, '[=ownerId]', petId, '[=petId]', visitId, '[=visitId]');
     return this.httpClient.delete(PetClinicUrls.visitPath(ownerId, petId, visitId));
   }
 
