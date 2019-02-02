@@ -8,7 +8,7 @@ import * as fromUi from '../../shared/ui.reducer';
 import * as fromOwner from '../../owner/store/owner.reducer';
 import {OwnerService} from '../store/owner.service';
 import {MatPaginator, MatSort} from '@angular/material';
-import {PageRequestBuilder} from '../../model/rest/page-request';
+import {PageRequestBuilder} from '../../model/general/page-request';
 import {OwnerSearchRequest} from './owner-search-request';
 import {ActivatedRoute, Router} from '@angular/router';
 import {take} from 'rxjs/operators';
