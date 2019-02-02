@@ -3,8 +3,8 @@ import {RouterModule, Routes} from '@angular/router';
 import {OwnerSearchComponent} from './owner-search/owner-search.component';
 import {OwnerDetailComponent} from './owner-detail/owner-detail.component';
 import {OwnerEditComponent} from './owner-edit/owner-edit.component';
-import {PetEditComponent} from './pet/pet-edit/pet-edit.component';
-import {VisitEditComponent} from './pet/visit-edit/visit-edit.component';
+import {PetEditComponent} from './pet-edit/pet-edit.component';
+import {VisitEditComponent} from './visit-edit/visit-edit.component';
 
 const routes: Routes = [
   {

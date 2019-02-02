@@ -4,7 +4,7 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {select, Store} from '@ngrx/store';
 import {AppState} from '../../app.reducer';
 import {Observable} from 'rxjs';
-import * as fromUi from '../../shared/ui.reducer';
+import * as fromUi from '../../shared/store/ui.reducer';
 import * as fromOwner from '../../owner/store/owner.reducer';
 import {OwnerService} from '../store/owner.service';
 import {MatPaginator, MatSort} from '@angular/material';

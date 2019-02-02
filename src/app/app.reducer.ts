@@ -1,6 +1,6 @@
 import {ActionReducerMap} from '@ngrx/store';
 
-import {uiReducer, UiState} from './shared/ui.reducer';
+import {uiReducer, UiState} from './shared/store/ui.reducer';
 import {ownerReducer, OwnerState} from './owner/store/owner.reducer';
 
 export interface AppState {

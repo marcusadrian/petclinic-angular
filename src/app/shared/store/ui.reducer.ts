@@ -1,6 +1,6 @@
 import {START_LOADING, STOP_LOADING, UIActions} from './ui.actions';
 import {createFeatureSelector, createSelector} from '@ngrx/store';
-import {StateId} from '../StateId';
+import {StateId} from './state-id';
 
 export interface UiState {
   isLoading: boolean;

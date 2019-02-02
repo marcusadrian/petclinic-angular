@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {select, Store} from '@ngrx/store';
-import * as fromUi from '../../shared/ui.reducer';
+import * as fromUi from '../../shared/store/ui.reducer';
 import {AppState} from '../../app.reducer';
 import {OwnerService} from '../store/owner.service';
 import {ActivatedRoute, Router} from '@angular/router';

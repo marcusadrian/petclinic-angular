@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {select, Store} from '@ngrx/store';
-import * as fromUi from '../../shared/ui.reducer';
+import * as fromUi from '../../shared/store/ui.reducer';
 import {Observable} from 'rxjs';
 import {AppState} from '../../app.reducer';
 import {OwnerService} from '../store/owner.service';

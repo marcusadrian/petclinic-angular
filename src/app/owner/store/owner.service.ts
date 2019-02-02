@@ -10,7 +10,7 @@ import {tap} from 'rxjs/operators';
 import {Observable} from 'rxjs';
 import {PetEdit} from '../../model/pet/pet-edit';
 import {VisitEdit} from '../../model/visit/visit-edit';
-import {PetClinicUrls} from '../../shared/PetClinicUrls';
+import {PetClinicUrls} from '../../shared/pet-clinic-urls';
 import {OwnerEdit} from '../../model/owner/owner-edit';
 import {Item} from '../../model/general/item';
 

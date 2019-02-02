@@ -3,10 +3,10 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {select, Store} from '@ngrx/store';
-import {AppState} from '../../../app.reducer';
-import {OwnerService} from '../../store/owner.service';
-import * as fromUi from '../../../shared/ui.reducer';
-import {VisitEdit} from '../../../model/visit/visit-edit';
+import {AppState} from '../../app.reducer';
+import {OwnerService} from '../store/owner.service';
+import * as fromUi from '../../shared/store/ui.reducer';
+import {VisitEdit} from '../../model/visit/visit-edit';
 
 @Component({
   selector: 'app-visit-edit',

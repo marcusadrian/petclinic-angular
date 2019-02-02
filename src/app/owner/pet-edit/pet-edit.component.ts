@@ -3,13 +3,13 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Observable} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
 import {select, Store} from '@ngrx/store';
-import {AppState} from '../../../app.reducer';
-import * as fromUi from '../../../shared/ui.reducer';
-import {NamedItem} from '../../../model/general/named-item';
-import {OwnerService} from '../../store/owner.service';
-import {PetEdit} from '../../../model/pet/pet-edit';
+import {AppState} from '../../app.reducer';
+import * as fromUi from '../../shared/store/ui.reducer';
+import {NamedItem} from '../../model/general/named-item';
+import {OwnerService} from '../store/owner.service';
+import {PetEdit} from '../../model/pet/pet-edit';
 import {HttpErrorResponse} from '@angular/common/http';
-import {BackEndValidation} from '../../../shared/back-end-validation';
+import {BackEndValidation} from '../../shared/back-end-validation';
 
 @Component({
   selector: 'app-pet-edit',

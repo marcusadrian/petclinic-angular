@@ -4,7 +4,7 @@ import {Observable} from 'rxjs';
 import {finalize} from 'rxjs/operators';
 import {Store} from '@ngrx/store';
 import {AppState} from '../app.reducer';
-import * as UI from './ui.actions';
+import * as UI from './store/ui.actions';
 
 @Injectable()
 export class LoadingInterceptor implements HttpInterceptor {
