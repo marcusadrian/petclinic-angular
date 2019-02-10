@@ -9,6 +9,7 @@ import {VisitEditComponent} from './visit-edit/visit-edit.component';
 const routes: Routes = [
   {
     path: 'owners', children: [
+      {path: '', redirectTo: 'search', pathMatch: 'full'},
       {path: 'search', component: OwnerSearchComponent},
       {path: 'new', component: OwnerEditComponent},
       {path: ':ownerId', component: OwnerDetailComponent},
