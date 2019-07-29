@@ -82,12 +82,12 @@ export class OwnerService {
 
   createOwner(owner: OwnerEdit) {
     console.log('create owner', JSON.stringify(owner));
-    return this.httpClient.put<Item>(PetClinicUrls.ownersPath(), owner);
+    return this.httpClient.post<Item>(PetClinicUrls.ownersPath(), owner);
   }
 
   updateOwner(ownerId: number, owner: OwnerEdit) {
     console.log('update owner', ownerId, '[=ownerId]', JSON.stringify(owner));
-    return this.httpClient.post(PetClinicUrls.ownerPath(ownerId), owner);
+    return this.httpClient.put(PetClinicUrls.ownerPath(ownerId), owner);
   }
 
   deleteOwner(ownerId: number) {
@@ -97,12 +97,12 @@ export class OwnerService {
 
   createPet(ownerId: number, pet: PetEdit) {
     console.log('create pet', ownerId, '[=ownerId]', JSON.stringify(pet));
-    return this.httpClient.put(PetClinicUrls.petsPath(ownerId), pet);
+    return this.httpClient.post(PetClinicUrls.petsPath(ownerId), pet);
   }
 
   updatePet(ownerId: number, petId: number, pet: PetEdit) {
     console.log('update pet', ownerId, '[=ownerId]', petId, '[=petId]', JSON.stringify(pet));
-    return this.httpClient.post(PetClinicUrls.petPath(ownerId, petId), pet);
+    return this.httpClient.put(PetClinicUrls.petPath(ownerId, petId), pet);
   }
 
   deletePet(ownerId: number, petId: number) {
@@ -112,12 +112,12 @@ export class OwnerService {
 
   createVisit(ownerId: number, petId: number, visit: VisitEdit) {
     console.log('create visit', ownerId, '[=ownerId]', petId, '[=petId]', JSON.stringify(visit));
-    return this.httpClient.put(PetClinicUrls.visitsPath(ownerId, petId), visit);
+    return this.httpClient.post(PetClinicUrls.visitsPath(ownerId, petId), visit);
   }
 
   updateVisit(ownerId: number, petId: number, visitId: number, visit: VisitEdit) {
     console.log('update visit', ownerId, '[=ownerId]', petId, '[=petId]', visitId, '[=visitId]', JSON.stringify(visit));
-    return this.httpClient.post(PetClinicUrls.visitPath(ownerId, petId, visitId), visit);
+    return this.httpClient.put(PetClinicUrls.visitPath(ownerId, petId, visitId), visit);
   }
 
   deleteVisit(ownerId: number, petId: number, visitId: number) {
