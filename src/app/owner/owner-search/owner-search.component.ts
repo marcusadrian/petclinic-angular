@@ -7,7 +7,8 @@ import {Observable} from 'rxjs';
 import * as fromUi from '../../shared/store/ui.reducer';
 import * as fromOwner from '../../owner/store/owner.reducer';
 import {OwnerService} from '../store/owner.service';
-import {MatPaginator, MatSort} from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import {PageRequestBuilder} from '../../model/general/page-request';
 import {OwnerSearchRequest} from './owner-search-request';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -40,8 +41,8 @@ export class OwnerSearchComponent implements OnInit {
   displayedColumns: string[] = ['name', 'address', 'city', 'telephone', 'petNames', 'show'];
   dataSource: OwnerSummary[];
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(
     private store: Store<AppState>,

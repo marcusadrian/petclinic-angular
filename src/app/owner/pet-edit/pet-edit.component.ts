@@ -28,7 +28,7 @@ export class PetEditComponent implements OnInit {
   isLoading$: Observable<boolean>;
   private petId: number;
   private ownerId: number;
-  private backEndValidation: BackEndValidation;
+  backEndValidation: BackEndValidation;
 
   constructor(
     private route: ActivatedRoute,
