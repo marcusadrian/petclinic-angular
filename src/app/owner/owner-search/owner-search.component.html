@@ -7,6 +7,7 @@
     (ngSubmit)="onSubmit()">
     <mat-form-field>
       <input
+        data-cy="firstName"
         type="text"
         matInput
         placeholder="first name"
@@ -15,6 +16,7 @@
     </mat-form-field>
     <mat-form-field>
       <input
+        data-cy="lastName"
         type="text"
         matInput
         placeholder="last name"
@@ -23,6 +25,7 @@
     </mat-form-field>
     <mat-form-field>
       <input
+        data-cy="address"
         type="text"
         matInput
         placeholder="address"
@@ -31,6 +34,7 @@
     </mat-form-field>
     <mat-form-field>
       <input
+        data-cy="city"
         type="text"
         matInput
         placeholder="city"
@@ -39,6 +43,7 @@
     </mat-form-field>
     <mat-form-field>
       <input
+        data-cy="telephone"
         type="text"
         matInput
         placeholder="telephone"
@@ -47,6 +52,7 @@
     </mat-form-field>
     <mat-form-field>
       <input
+        data-cy="petName"
         type="text"
         matInput
         placeholder="pet name"
@@ -107,7 +113,7 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" data-cy="search-result"></tr>
 
   </table>
   <mat-paginator
