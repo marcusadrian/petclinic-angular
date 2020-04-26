@@ -9,7 +9,7 @@ import * as fromOwner from '../../owner/store/owner.reducer';
 import {OwnerService} from '../store/owner.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import {PageRequestBuilder} from '../../model/general/page-request';
+import {PageRequestBuilder, PageRequest} from '../../model/general/page-request';
 import {OwnerSearchRequest} from './owner-search-request';
 import {ActivatedRoute, Router} from '@angular/router';
 import {take} from 'rxjs/operators';
@@ -137,14 +137,17 @@ export class OwnerSearchComponent implements OnInit {
   }
 
   private fetchOwners() {
-    this.ownerSearchRequest.pageRequest = new PageRequestBuilder()
+    const newOwnerSearchRequest: OwnerSearchRequest = {
+      ...this.ownerSearchRequest,
+      pageRequest: new PageRequestBuilder()
       .page(this.paginator.pageIndex)
       .size(this.paginator.pageSize)
       .sortBy(this.sortByKey(this.sort.active))
       .sortDirection(this.sort.direction)
-      .build();
-    console.log(JSON.stringify(this.ownerSearchRequest));
-    this.ownerService.fetchOwners(this.ownerSearchRequest).subscribe((resp: OwnerSearchResponse) => {
+      .build()
+    };
+    console.log(JSON.stringify(newOwnerSearchRequest));
+    this.ownerService.fetchOwners(newOwnerSearchRequest).subscribe((resp: OwnerSearchResponse) => {
       this.dataSource = resp.content;
       this.paginator.pageSize = resp.size;
       this.paginator.length = resp.totalElements;
